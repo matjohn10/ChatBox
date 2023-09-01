@@ -1,0 +1,49 @@
+{
+  "userExample": {
+    "userId": "12345",
+    "username": "mat10",
+    "password": "10",
+    "bgColor": "#3366cc",
+    "friends": [
+      {
+        "userId": "12",
+        "username": "anna5648",
+        "bgColor": "darkgrey"
+      },
+      {
+        "userId": "123",
+        "username": "jaegyun",
+        "bgColor": "darkred"
+      }
+    ],
+    "messages": [
+      {
+        "convoId": "12",
+        "sent": [
+          {
+            "content": "I love you!!",
+            "date": "2023-08-20T14:48:00.000Z"
+          },
+          {
+            "content": "Have great day at work <3",
+            "date": "2023-08-20T14:50:00.000Z"
+          }
+        ],
+        "received": [
+          {
+            "userId": "12",
+            "content": "Me too <3",
+            "date": "2023-08-20T14:49:00.000Z"
+          }
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "roomId": "room99",
+        "members": ["123", "12"]
+      }
+    ]
+  },
+  "users": []
+}
