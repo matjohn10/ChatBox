@@ -1,10 +1,23 @@
 import type { User } from "../../app/userHook";
+import ProfileSettings from "./ProfileSettings";
+import FriendsList from "./FriendsList";
+import FriendFinder from "./FriendFinder";
+import ConversationExcerpts from "./ConversationExcerpts";
+import ShareId from "./ShareId";
 
 interface Props {
   user: User | null | undefined;
+  selectedMenu: string;
 }
 
-const ProfileInfoSection = ({ user }: Props) => {
+const ProfileInfoSection = ({ user, selectedMenu }: Props) => {
+  const menuItems = [
+    <ProfileSettings />,
+    <FriendsList />,
+    <ConversationExcerpts />,
+    <FriendFinder />,
+    <ShareId />,
+  ];
   return (
     <section className="profileInfoSection">
       <article className="profileInfoArticle">
@@ -28,7 +41,7 @@ const ProfileInfoSection = ({ user }: Props) => {
         </div>
       </article>
       <article className="accountLogicsArticle">
-        Stuff selected from side menu.
+        {menuItems[parseInt(selectedMenu) - 1]}
       </article>
     </section>
   );

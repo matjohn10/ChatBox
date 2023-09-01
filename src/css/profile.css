@@ -96,3 +96,12 @@
   display: flex;
   padding: 2rem 1rem;
 }
+
+.selected {
+  background-color: var(--btn-light) !important;
+}
+
+.selected:hover {
+  color: whitesmoke !important;
+  cursor: default !important;
+}

@@ -1,27 +1,24 @@
 import { useAppSelector } from "../../app/hooks";
-import { getUser, getAllUsers } from "./userSlice";
+import { getUser } from "./userSlice";
 import ProfileInfoSection from "./ProfileInfoSection";
 import ProfileNavSection from "./ProfileNavSection";
+import { useState } from "react";
 
 const UserPage = () => {
   const user = useAppSelector(getUser);
-  const users = useAppSelector(getAllUsers);
-  const renderedUsers = users?.map((user) => (
-    <div
-      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
-      key={Math.random()}
-    >
-      <p>
-        {user.firstname}&nbsp;{user.lastname}
-      </p>
-      <p>{user.username}</p>
-    </div>
-  ));
+  const [selectedMenu, setSelectedMenu] = useState("3");
   return (
     <>
-      <ProfileNavSection />
+      <ProfileNavSection
+        selectedMenu={selectedMenu}
+        setSelectedMenu={setSelectedMenu}
+      />
       <div className="profileMainContainer">
-        <ProfileInfoSection user={user} />
+        <ProfileInfoSection
+          user={user}
+          selectedMenu={selectedMenu}
+          setSelectedMenu={setSelectedMenu}
+        />
       </div>
     </>
   );
