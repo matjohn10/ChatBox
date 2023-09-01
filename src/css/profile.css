@@ -95,6 +95,7 @@
 .accountLogicsArticle {
   display: flex;
   padding: 2rem 1rem;
+  width: 100%;
 }
 
 .selected {
@@ -104,4 +105,23 @@
 .selected:hover {
   color: whitesmoke !important;
   cursor: default !important;
+}
+
+.friendFinderArticle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.suggestedFriendsDiv {
+  width: 20%;
+}
+
+.searchFriendDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
 }

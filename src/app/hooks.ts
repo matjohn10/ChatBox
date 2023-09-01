@@ -5,10 +5,18 @@ type DispatchFunc = () => AppDispatch;
 export const useAppDispatch: DispatchFunc = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
-// Socket Hooks
-// import { io } from "socket.io-client";
-// import React from "react";
-// import { Socket } from "socket.io-client/debug";
-// const SOCKET_URL = "http://localhost:3000";
-// export const socket = io(SOCKET_URL, { autoConnect: false });
-// export const SocketContext = React.createContext<Socket>(new Socket(""));
+// Random Hooks
+import type { User } from "./userHook";
+export const randomUsers = (users: User[] | undefined) => {
+  if (users) {
+    const max = users?.length - 1;
+    let ind = Math.floor(Math.random() * max);
+    let randomUsers: User[] = [];
+    for (let i: number = 0; i < 15; i++) {
+      randomUsers.push(users[ind]);
+      ind = Math.floor(Math.random() * max);
+    }
+    return randomUsers;
+  }
+  return [];
+};

@@ -14,11 +14,7 @@ const UserPage = () => {
         setSelectedMenu={setSelectedMenu}
       />
       <div className="profileMainContainer">
-        <ProfileInfoSection
-          user={user}
-          selectedMenu={selectedMenu}
-          setSelectedMenu={setSelectedMenu}
-        />
+        <ProfileInfoSection user={user} selectedMenu={selectedMenu} />
       </div>
     </>
   );
