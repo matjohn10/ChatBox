@@ -1,9 +1,14 @@
-import { useAppSelector, randomUsers } from "../../app/hooks";
+import { useAppSelector } from "../../app/hooks";
 import { getAllUsers } from "./userSlice";
 import SuggestedFriendExcerpt from "./SuggestedFriendExcerpt";
 import { useState } from "react";
+import { Socket } from "socket.io-client";
 
-const FriendFinder = () => {
+interface Props {
+  socket: Socket;
+}
+
+const FriendFinder = ({ socket }: Props) => {
   const users = useAppSelector(getAllUsers);
   const [searchParam, setSearchParam] = useState("");
   const onChangeParam = (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -18,7 +23,11 @@ const FriendFinder = () => {
     );
   let suggestedUsers = matchingUsers
     ? matchingUsers.map((user) => (
-        <SuggestedFriendExcerpt user={user} key={user.userId} />
+        <SuggestedFriendExcerpt
+          friend={user}
+          key={user.userId}
+          socket={socket}
+        />
       ))
     : [<></>];
 

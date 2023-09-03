@@ -1,9 +1,10 @@
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import { getUser, saveSocketSession } from "./userSlice";
+import { getUser, saveSocketSession, fetchUser } from "./userSlice";
 import ProfileInfoSection from "./ProfileInfoSection";
 import ProfileNavSection from "./ProfileNavSection";
 import { useState, useEffect } from "react";
 import { Socket } from "socket.io-client";
+import { Friend, User } from "../../app/userHook";
 
 interface Props {
   socket: Socket;
@@ -22,6 +23,12 @@ const UserPage = ({ socket }: Props) => {
       );
     });
     socket.emit("add_personal_room", { room: user?.userId });
+    socket.on("friend_added", ({ user }: { user: Friend }) => {
+      alert(
+        `You have a new friend. ${user.firstname} ${user.lastname} (${user.username}) added you as a friend.`
+      );
+      dispatch(fetchUser({ username: user.username, userId: user.userId })); // change that password for email, if password not given
+    });
   }, [socket]);
 
   return (
@@ -31,7 +38,11 @@ const UserPage = ({ socket }: Props) => {
         setSelectedMenu={setSelectedMenu}
       />
       <div className="profileMainContainer">
-        <ProfileInfoSection user={user} selectedMenu={selectedMenu} />
+        <ProfileInfoSection
+          user={user}
+          selectedMenu={selectedMenu}
+          socket={socket}
+        />
       </div>
     </>
   );

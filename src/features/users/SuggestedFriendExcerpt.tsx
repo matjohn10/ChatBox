@@ -1,45 +1,59 @@
-import type { User } from "../../app/userHook";
+import type { Friend } from "../../app/userHook";
 import * as Unicons from "@iconscout/react-unicons";
-import { useAppSelector } from "../../app/hooks";
-import { getFriends } from "./userSlice";
+import { useAppSelector, useAppDispatch } from "../../app/hooks";
+import { getFriends, addNewFriend, getUser } from "./userSlice";
 import { useState } from "react";
+import { Socket } from "socket.io-client";
 
 interface Props {
-  user: User;
+  friend: Friend;
+  socket: Socket;
 }
 
-const SuggestedFriendExcerpt = ({ user }: Props) => {
+const SuggestedFriendExcerpt = ({ friend, socket }: Props) => {
   const currUserFriends = useAppSelector(getFriends);
+  const currUser = useAppSelector(getUser);
+  const dispatch = useAppDispatch();
   const [isFriend, setIsFriend] = useState(
-    currUserFriends?.find((friend) => friend.userId === user.userId) && true
+    currUserFriends?.find((otherUser) => otherUser.userId === friend.userId) &&
+      true
   );
-  // let isFriend =
-  //   currUserFriends?.find((friend) => friend.userId === user.userId) && true;
   const onAddFriendClick = (e: React.MouseEvent<SVGElement, MouseEvent>) => {
+    const newUserFriends = currUserFriends?.includes(friend)
+      ? [...currUserFriends]
+      : [...(currUserFriends || []), friend];
+    dispatch(
+      addNewFriend({
+        user: currUser || {},
+        friends: newUserFriends || [],
+        friend,
+      })
+    );
+    socket.emit("friend_added", { user: currUser, friend });
     setIsFriend(true);
   };
   return (
-    <div className="suggestedFriendDiv">
+    <div className="suggestedFriendDiv" key={Math.random()}>
       <div
         className="suggestedFriendBadge"
-        style={{ color: user.bgColor }}
+        style={{ color: friend.bgColor }}
         onClick={() => {
           console.log(isFriend);
         }}
       >
-        {user.firstname.slice(0, 1)}
+        {friend.firstname.slice(0, 1)}
       </div>
       <div className="suggestedFriendInfo">
         <p>
-          {user.firstname}&nbsp; {user.lastname}
+          {friend.firstname}&nbsp; {friend.lastname}
         </p>
-        <p className="usernameText">{user.username}</p>
+        <p className="usernameText">{friend.username}</p>
       </div>
       {isFriend ? (
-        <Unicons.UilCheckCircle color={user.bgColor} />
+        <Unicons.UilCheckCircle color={friend.bgColor} />
       ) : (
         <Unicons.UilPlusCircle
-          color={user.bgColor}
+          color={friend.bgColor}
           className="addFriendBtn"
           onClick={onAddFriendClick}
         />

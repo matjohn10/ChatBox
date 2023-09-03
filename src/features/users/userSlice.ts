@@ -5,7 +5,7 @@ import {
 } from "@reduxjs/toolkit";
 
 import type { RootState } from "../../app/store";
-import { User } from "../../app/userHook";
+import { Friend, User } from "../../app/userHook";
 import axios from "axios";
 
 const SERVER_URL = "http://localhost:3000";
@@ -39,7 +39,7 @@ export const fetchAllUsers = createAsyncThunk(
 
 export const fetchUser = createAsyncThunk(
   "user/fetchUser",
-  async (user: { username: string; password: string }) => {
+  async (user: { username: string; password?: string; userId?: string }) => {
     try {
       const response = await axios.post(SERVER_URL + "/users/login", user);
       const data = response.data[0];
@@ -66,7 +66,6 @@ export const addUser = createAsyncThunk("user/addUser", async (user: User) => {
 export const saveSocketSession = createAsyncThunk(
   "user/saveSocket",
   async (userSocket: { userId: string; socketId: string }) => {
-    console.log(userSocket);
     try {
       const response = await axios.post(
         SERVER_URL + "/socket/save-id",
@@ -76,6 +75,29 @@ export const saveSocketSession = createAsyncThunk(
     } catch (err) {
       let message = "Unknown Error";
       if (err instanceof Error) message = err.message;
+      return message;
+    }
+  }
+);
+
+export const addNewFriend = createAsyncThunk(
+  "user/addNewFriend",
+  async (updatedUser: {
+    user: User | {};
+    friends: Friend[] | [];
+    friend: Friend;
+  }) => {
+    try {
+      const response = await axios.post(
+        SERVER_URL + "/users/add-friend",
+        updatedUser
+      );
+      console.log("good");
+      return response.data;
+    } catch (err) {
+      let message = "Unknown Error";
+      if (err instanceof Error) message = err.message;
+      console.log("error");
       return message;
     }
   }
@@ -118,6 +140,13 @@ const userSlice = createSlice({
       .addCase(fetchAllUsers.fulfilled, (state, action) => {
         state.users = action.payload;
         state.status = "succeeded";
+      })
+      .addCase(addNewFriend.fulfilled, (state, action) => {
+        console.log(action.payload);
+        state.user = action.payload;
+      })
+      .addCase(addNewFriend.rejected, (state, action) => {
+        console.log(action.error.message);
       });
   },
 });

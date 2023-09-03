@@ -4,18 +4,20 @@ import FriendsList from "./FriendsList";
 import FriendFinder from "./FriendFinder";
 import ConversationExcerpts from "./ConversationExcerpts";
 import ShareId from "./ShareId";
+import { Socket } from "socket.io-client";
 
 interface Props {
   user: User | null | undefined;
   selectedMenu: string;
+  socket: Socket;
 }
 
-const ProfileInfoSection = ({ user, selectedMenu }: Props) => {
+const ProfileInfoSection = ({ user, selectedMenu, socket }: Props) => {
   const menuItems = [
     <ProfileSettings />,
     <FriendsList />,
     <ConversationExcerpts />,
-    <FriendFinder />,
+    <FriendFinder socket={socket} />,
     <ShareId />,
   ];
   return (
