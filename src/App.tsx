@@ -38,7 +38,7 @@ function App() {
 
           {/* Protected user routes */}
           <Route path="/user" element={<PrivateRoutes />}>
-            <Route index element={<UserPage />} />
+            <Route index element={<UserPage socket={socket} />} />
           </Route>
         </Route>
       </Routes>

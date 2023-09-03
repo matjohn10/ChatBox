@@ -8,9 +8,7 @@ import { fetchAllUsers } from "./features/users/userSlice.ts";
 store.dispatch(fetchAllUsers());
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </React.StrictMode>
+  <Provider store={store}>
+    <App />
+  </Provider>
 );

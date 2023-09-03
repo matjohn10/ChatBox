@@ -8,19 +8,24 @@ const FriendFinder = () => {
   const [searchParam, setSearchParam] = useState("");
   const onChangeParam = (e: React.ChangeEvent<HTMLInputElement>) =>
     setSearchParam(e.currentTarget.value);
-  const matchingUsers = users?.filter(
-    (user) =>
-      user.userId.includes(searchParam) ||
-      user.firstname.includes(searchParam) ||
-      user.lastname.includes(searchParam)
-  );
+  const matchingUsers =
+    searchParam &&
+    users?.filter((user) =>
+      user.username
+        .concat(user.firstname, user.lastname)
+        .toLowerCase()
+        .includes(searchParam.toLowerCase())
+    );
   let suggestedUsers = matchingUsers
-    ? matchingUsers.map((user) => <SuggestedFriendExcerpt user={user} />)
+    ? matchingUsers.map((user) => (
+        <SuggestedFriendExcerpt user={user} key={user.userId} />
+      ))
     : [<></>];
 
   return (
     <article className="friendFinderArticle">
       <div className="searchFriendDiv">
+        <h2>Search New Friends</h2>
         <form>
           <label htmlFor="searchParam">Search: </label>
           <input
@@ -29,7 +34,7 @@ const FriendFinder = () => {
             name="searchParam"
             value={searchParam}
             onChange={onChangeParam}
-            placeholder="Name or ID"
+            placeholder="Name or Username"
           />
         </form>
       </div>

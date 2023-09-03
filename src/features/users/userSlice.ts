@@ -63,6 +63,24 @@ export const addUser = createAsyncThunk("user/addUser", async (user: User) => {
   }
 });
 
+export const saveSocketSession = createAsyncThunk(
+  "user/saveSocket",
+  async (userSocket: { userId: string; socketId: string }) => {
+    console.log(userSocket);
+    try {
+      const response = await axios.post(
+        SERVER_URL + "/socket/save-id",
+        userSocket
+      );
+      return response.data;
+    } catch (err) {
+      let message = "Unknown Error";
+      if (err instanceof Error) message = err.message;
+      return message;
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: "user",
   initialState,

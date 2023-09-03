@@ -7,6 +7,16 @@
   --btn-dark: #090f15;
   --accent: #486fa3;
 }
+/* 
+TO CHANGE FOR MORE MONOCHROME COLORS
+--text-light: #FDFDFC;
+  --text-dark: #0D1011;
+  --background: #FDFDFC;
+  --background-dark: #042d64;
+  --btn-light: #D0D8DC;
+  --btn-dark: #303A40;
+  --accent: #658393;
+*/
 
 * {
   margin: 0;
