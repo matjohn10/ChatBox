@@ -153,7 +153,10 @@ const userSlice = createSlice({
 
 // Get USER data selecters
 export const getUser = (state: RootState) => state.user.user;
-export const getFriends = (state: RootState) => state.user.user?.friends;
+export const getFriends = (state: RootState) =>
+  [...(state.user.user?.friends || [])].sort((a, b) =>
+    a.firstname.localeCompare(b.firstname)
+  );
 export const getFriendById = (state: RootState, userId: string) =>
   state.user.user?.friends.find((friend) => friend.userId === userId);
 export const getConversations = (state: RootState) =>

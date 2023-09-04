@@ -8,6 +8,8 @@ import LoggedOut from "./components/LoggedOut";
 import IndexPage from "./components/IndexPage";
 import PrivateRoutes from "./components/PrivateRoutes";
 import UserPage from "./features/users/UserPage";
+import MessagesPage from "./features/messages/MessagesPage";
+import PersonalMessagePage from "./features/messages/PersonalMessagePage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { io, Socket } from "socket.io-client";
 
@@ -39,6 +41,10 @@ function App() {
           {/* Protected user routes */}
           <Route path="/user" element={<PrivateRoutes />}>
             <Route index element={<UserPage socket={socket} />} />
+          </Route>
+          <Route path="/messages" element={<PrivateRoutes />}>
+            <Route index element={<MessagesPage />} />
+            <Route path={":friendId"} element={<PersonalMessagePage />} />
           </Route>
         </Route>
       </Routes>

@@ -212,3 +212,50 @@
   cursor: pointer;
   opacity: 0.75;
 }
+
+/* Friends List CSS */
+
+.renderedFriendsList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.renderedFriendsList h2 {
+  margin-bottom: 1.75rem;
+}
+
+.letterDiv {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+.letterDiv h3 {
+  margin-left: 0.5rem;
+  padding: 0.5rem;
+}
+
+.straightLine {
+  box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.65);
+  margin-bottom: 0.375rem;
+}
+
+.friendsExcerptsDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0 3rem;
+  gap: 10px;
+}
+.userNames {
+  display: flex;
+  flex-direction: column;
+}
+
+.friendExcerptDiv {
+  display: flex;
+  width: 90%;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 6rem;
+}

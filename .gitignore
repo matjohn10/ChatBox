@@ -24,5 +24,6 @@ dist-ssr
 *.sw?
 
 # Custom
-src/features/messages/
+src/features/messages/*.ts
+src/features/messages/MessagePage.tsx
 src/components/Test.tsx

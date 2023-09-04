@@ -47,3 +47,102 @@ export const emptyUser = {
   conversations: [],
   rooms: [],
 };
+
+export interface FriendsLetters {
+  A: Friend[];
+  B: Friend[];
+  C: Friend[];
+  D: Friend[];
+  E: Friend[];
+  F: Friend[];
+  G: Friend[];
+  H: Friend[];
+  I: Friend[];
+  J: Friend[];
+  K: Friend[];
+  L: Friend[];
+  M: Friend[];
+  N: Friend[];
+  O: Friend[];
+  P: Friend[];
+  Q: Friend[];
+  R: Friend[];
+  S: Friend[];
+  T: Friend[];
+  U: Friend[];
+  V: Friend[];
+  W: Friend[];
+  X: Friend[];
+  Y: Friend[];
+  Z: Friend[];
+}
+const FriendAlphabet: FriendsLetters = {
+  A: [],
+  B: [],
+  C: [],
+  D: [],
+  E: [],
+  F: [],
+  G: [],
+  H: [],
+  I: [],
+  J: [],
+  K: [],
+  L: [],
+  M: [],
+  N: [],
+  O: [],
+  P: [],
+  Q: [],
+  R: [],
+  S: [],
+  T: [],
+  U: [],
+  V: [],
+  W: [],
+  X: [],
+  Y: [],
+  Z: [],
+};
+
+export const friendLetterObj = (friends: Friend[]) => {
+  let letterObj: FriendsLetters = {
+    A: [],
+    B: [],
+    C: [],
+    D: [],
+    E: [],
+    F: [],
+    G: [],
+    H: [],
+    I: [],
+    J: [],
+    K: [],
+    L: [],
+    M: [],
+    N: [],
+    O: [],
+    P: [],
+    Q: [],
+    R: [],
+    S: [],
+    T: [],
+    U: [],
+    V: [],
+    W: [],
+    X: [],
+    Y: [],
+    Z: [],
+  };
+  for (let i = 0; i < friends.length; i++) {
+    const friendNameLetter = friends[i].firstname.slice(0, 1);
+    letterObj[friendNameLetter.toUpperCase() as keyof typeof FriendAlphabet] = [
+      ...letterObj[
+        friendNameLetter.toUpperCase() as keyof typeof FriendAlphabet
+      ],
+      friends[i],
+    ];
+  }
+  console.log(letterObj);
+  return letterObj;
+};

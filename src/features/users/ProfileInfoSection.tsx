@@ -15,7 +15,7 @@ interface Props {
 const ProfileInfoSection = ({ user, selectedMenu, socket }: Props) => {
   const menuItems = [
     <ProfileSettings />,
-    <FriendsList />,
+    <FriendsList user={user} />,
     <ConversationExcerpts />,
     <FriendFinder socket={socket} />,
     <ShareId />,
