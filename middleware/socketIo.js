@@ -28,7 +28,12 @@ module.exports = function socketMW(httpServer) {
     // REAL APP LISTEN
     socket.on("add_personal_room", (data) => {
       if (data.room) socket.join(data.room);
-      console.log(socket.rooms);
+    });
+    socket.on("friend_added", ({ user, friend }) => {
+      socket.to(friend.userId).emit("friend_added", { user: friend });
+    });
+    socket.on("message_to_friend", (data) => {
+      socket.to(data.to).emit("message_from_friend", data);
     });
   });
 };
