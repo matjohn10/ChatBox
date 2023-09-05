@@ -103,6 +103,30 @@ export const addNewFriend = createAsyncThunk(
   }
 );
 
+export const saveNewMessage = createAsyncThunk(
+  "user/saveNewMessage",
+  async (message: {
+    to: string;
+    from: string;
+    content: string;
+    date: string;
+  }) => {
+    try {
+      const response = await axios.post(
+        SERVER_URL + "/users/add-message",
+        message
+      );
+      console.log(response.data);
+      return response.data; // should return the new updated user
+    } catch (err) {
+      let message = "Unknown Error";
+      if (err instanceof Error) message = err.message;
+      console.log("error");
+      return message;
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: "user",
   initialState,
@@ -147,6 +171,13 @@ const userSlice = createSlice({
       })
       .addCase(addNewFriend.rejected, (state, action) => {
         console.log(action.error.message);
+      })
+      .addCase(saveNewMessage.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(saveNewMessage.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.status = "succeeded";
       });
   },
 });
@@ -163,11 +194,8 @@ export const getConversations = (state: RootState) =>
   state.user.user?.conversations;
 export const getRooms = (state: RootState) => state.user.user?.rooms;
 
-export const getConvoFromRoomId = createSelector(
-  [getConversations, (roomId: string) => roomId],
-  (conversation, roomId) =>
-    conversation?.find((convo) => convo.convoId === roomId)
-);
+export const getConvoFromRoomOrFriendId = (state: RootState, Id: string) =>
+  state.user.user?.conversations.find((convo) => convo.convoId === Id);
 
 // Get Users data
 export const getAllUsers = (state: RootState) => state.user.users;

@@ -17,6 +17,7 @@ import { io, Socket } from "socket.io-client";
 import "./css/index.css";
 import "./css/credentials.css";
 import "./css/profile.css";
+import "./css/messages.css";
 
 const socket: Socket = io("http://localhost:3000", {
   autoConnect: false,
@@ -42,9 +43,9 @@ function App() {
           <Route path="/user" element={<PrivateRoutes />}>
             <Route index element={<UserPage socket={socket} />} />
           </Route>
-          <Route path="/messages" element={<PrivateRoutes />}>
-            <Route index element={<MessagesPage />} />
-            <Route path={":friendId"} element={<PersonalMessagePage />} />
+          <Route path="/messages/:friendId" element={<PrivateRoutes />}>
+            <Route index element={<PersonalMessagePage socket={socket} />} />
+            {/* <Route path={":friendId"} element={<PersonalMessagePage />} /> */}
           </Route>
         </Route>
       </Routes>
