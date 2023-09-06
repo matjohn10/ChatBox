@@ -25,7 +25,7 @@ const FriendFinder = ({ socket }: Props) => {
     ? matchingUsers.map((user) => (
         <SuggestedFriendExcerpt
           friend={user}
-          key={user.userId}
+          key={Math.random()}
           socket={socket}
         />
       ))

@@ -6,6 +6,7 @@ import {
   getUser,
   saveNewMessage,
   fetchUser,
+  getUserStatus,
 } from "../users/userSlice";
 import { Socket } from "socket.io-client";
 import ConversationExcerpts from "../users/ConversationExcerpts";
@@ -22,6 +23,7 @@ const PersonalMessagePage = ({ socket }: Props) => {
   const onChangeMessage = (e: React.ChangeEvent<HTMLInputElement>) =>
     setMessage(e.currentTarget.value);
   const { friendId } = useParams();
+  console.log(friendId);
   const friend = useAppSelector((state) =>
     getFriendById(state, friendId || "")
   );
@@ -29,6 +31,7 @@ const PersonalMessagePage = ({ socket }: Props) => {
     getConvoFromRoomOrFriendId(state, friendId || "")
   );
   const user = useAppSelector(getUser);
+  const status = useAppSelector(getUserStatus);
 
   const onSendMessage = (
     e:
@@ -43,8 +46,9 @@ const PersonalMessagePage = ({ socket }: Props) => {
       from: user?.userId || "",
       date: new Date().toISOString(),
     };
-    socket.emit("message_to_friend", data);
     dispatch(saveNewMessage(data));
+    if (status === "succeeded") socket.emit("message_to_friend", data);
+
     setMessage("");
   };
 

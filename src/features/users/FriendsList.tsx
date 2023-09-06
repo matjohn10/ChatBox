@@ -14,7 +14,7 @@ const FriendsList = ({}: Props) => {
 
   const renderedFriends = Array.from(Object.keys(sortedLetters)).map(
     (letter) => (
-      <div className="letterDiv">
+      <div className="letterDiv" key={Math.random()}>
         {sortedLetters[letter as keyof typeof sortedLetters].length ? (
           <>
             <h3>{letter}</h3>

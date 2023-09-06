@@ -12,7 +12,7 @@ const FriendExcerpt = ({ friend }: Props) => {
     navigate(`/messages/${friend.userId}`);
   };
   return (
-    <div className="friendExcerptDiv">
+    <div className="friendExcerptDiv" key={Math.random()}>
       <div className="userNames">
         <p>
           {friend.firstname}&nbsp; {friend.lastname}

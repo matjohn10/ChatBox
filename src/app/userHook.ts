@@ -143,6 +143,5 @@ export const friendLetterObj = (friends: Friend[]) => {
       friends[i],
     ];
   }
-  console.log(letterObj);
   return letterObj;
 };

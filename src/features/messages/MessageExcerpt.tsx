@@ -28,7 +28,7 @@ const MessageExcerpt = ({ conversation }: Props) => {
           ))}
         </p>
       )}{" "}
-      <Link to={`/messages:${conversation.convoId}`}>Go to messages</Link>
+      <Link to={`/messages/${conversation.convoId}`}>Go to messages</Link>
     </>
   );
   //   [...rooms, ...friends].find(
@@ -36,8 +36,12 @@ const MessageExcerpt = ({ conversation }: Props) => {
   //       (convoType as Friend).userId === conversation.convoId ||
   //       (convoType as Room).roomId === conversation.convoId
   //   );
-  console.log(convoRoom, convoFriend);
-  return <div className="messageExcerpt">{messageExcerpt}</div>;
+
+  return (
+    <div className="messageExcerpt" key={Math.random()}>
+      {messageExcerpt}
+    </div>
+  );
 };
 
 export default MessageExcerpt;
