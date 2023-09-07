@@ -8,7 +8,6 @@ import LoggedOut from "./components/LoggedOut";
 import IndexPage from "./components/IndexPage";
 import PrivateRoutes from "./components/PrivateRoutes";
 import UserPage from "./features/users/UserPage";
-import MessagesPage from "./features/messages/MessagesPage";
 import PersonalMessagePage from "./features/messages/PersonalMessagePage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { io, Socket } from "socket.io-client";
@@ -18,12 +17,27 @@ import "./css/index.css";
 import "./css/credentials.css";
 import "./css/profile.css";
 import "./css/messages.css";
+import { useAppSelector } from "./app/hooks";
+import { getuserSettings } from "./features/users/userSlice";
+import { useEffect } from "react";
 
 const socket: Socket = io("http://localhost:3000", {
   autoConnect: false,
 });
 
 function App() {
+  const userSettings = useAppSelector(getuserSettings);
+  const checkUserMode = () => {
+    const isDark = userSettings?.isDarkMode;
+    const styles = getComputedStyle(document.documentElement).getPropertyValue(
+      "--btn-dark"
+    );
+    console.log(styles);
+  };
+
+  useEffect(() => {
+    checkUserMode();
+  }, []);
   return (
     <Router>
       <Routes>

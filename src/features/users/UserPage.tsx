@@ -4,7 +4,7 @@ import ProfileInfoSection from "./ProfileInfoSection";
 import ProfileNavSection from "./ProfileNavSection";
 import { useState, useEffect } from "react";
 import { Socket } from "socket.io-client";
-import { Friend, User } from "../../app/userHook";
+import { Friend } from "../../app/userHook";
 
 interface Props {
   socket: Socket;

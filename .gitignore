@@ -27,3 +27,4 @@ dist-ssr
 src/features/messages/*.ts
 src/features/messages/MessagePage.tsx
 src/components/Test.tsx
+.env

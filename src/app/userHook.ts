@@ -1,3 +1,16 @@
+export interface PersonalInfo {
+  newUsername?: string;
+  newEmail?: string;
+  newPassword?: string;
+  bgColor?: string;
+}
+
+export interface UserSettings {
+  userId: string | undefined;
+  isDarkMode: boolean;
+  bgColor: string | undefined;
+}
+
 export interface Conversation {
   convoId: string;
   sent: { content: string; date: string }[];

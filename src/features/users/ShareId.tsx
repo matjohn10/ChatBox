@@ -1,5 +1,9 @@
+import { useAppSelector } from "../../app/hooks";
+import { getUser } from "./userSlice";
+
 const ShareId = () => {
-  return <div>ShareId</div>;
+  const user = useAppSelector(getUser);
+  return <div className="shareIdDiv">My ID:&nbsp; {user?.userId}</div>;
 };
 
 export default ShareId;

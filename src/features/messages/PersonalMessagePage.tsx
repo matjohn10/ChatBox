@@ -23,7 +23,6 @@ const PersonalMessagePage = ({ socket }: Props) => {
   const onChangeMessage = (e: React.ChangeEvent<HTMLInputElement>) =>
     setMessage(e.currentTarget.value);
   const { friendId } = useParams();
-  console.log(friendId);
   const friend = useAppSelector((state) =>
     getFriendById(state, friendId || "")
   );
@@ -53,7 +52,7 @@ const PersonalMessagePage = ({ socket }: Props) => {
   };
 
   useEffect(() => {
-    socket.on("message_from_friend", (data) => {
+    socket.on("message_from_friend", () => {
       dispatch(
         fetchUser({ username: user?.username || "", userId: user?.userId })
       );

@@ -17,7 +17,7 @@ const FriendFinder = ({ socket }: Props) => {
     searchParam &&
     users?.filter((user) =>
       user.username
-        .concat(user.firstname, user.lastname)
+        .concat(user.firstname, user.lastname, user.userId)
         .toLowerCase()
         .includes(searchParam.toLowerCase())
     );
@@ -43,7 +43,7 @@ const FriendFinder = ({ socket }: Props) => {
             name="searchParam"
             value={searchParam}
             onChange={onChangeParam}
-            placeholder="Name or Username"
+            placeholder="Name or Username or ID"
           />
         </form>
       </div>

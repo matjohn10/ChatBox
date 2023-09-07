@@ -1,11 +1,11 @@
 :root {
-  --text-light: #fbfcfd;
-  --text-dark: #090f15;
-  --background: #fbfcfd;
+  --text-light: #fdfdfc;
+  --text-dark: #0d1011;
+  --background: #fdfdfc;
   --background-dark: #042d64;
-  --btn-light: #9cb4d3;
-  --btn-dark: #090f15;
-  --accent: #486fa3;
+  --btn-light: #d0d8dc;
+  --btn-dark: #303a40;
+  --accent: #658393;
 }
 /* 
 TO CHANGE FOR MORE MONOCHROME COLORS
@@ -16,6 +16,14 @@ TO CHANGE FOR MORE MONOCHROME COLORS
   --btn-light: #D0D8DC;
   --btn-dark: #303A40;
   --accent: #658393;
+  ------------
+  --text-light: #fbfcfd;
+  --text-dark: #090f15;
+  --background: #fbfcfd;
+  --background-dark: #042d64;
+  --btn-light: #9cb4d3;
+  --btn-dark: #090f15;
+  --accent: #486fa3;
 */
 
 * {

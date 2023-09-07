@@ -1,18 +1,15 @@
-import {
-  createSlice,
-  createAsyncThunk,
-  createSelector,
-} from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import type { RootState } from "../../app/store";
-import { Friend, User } from "../../app/userHook";
+import { Friend, PersonalInfo, User, UserSettings } from "../../app/userHook";
 import axios from "axios";
 
-const SERVER_URL = "http://localhost:3000";
+// import.meta.env.VITE_URL = "http://localhost:3000";
 
 interface InitialUserState {
   user?: User | null;
   users?: User[] | [];
+  settings?: UserSettings;
   status: string;
   error: undefined | string;
 }
@@ -26,7 +23,7 @@ export const fetchAllUsers = createAsyncThunk(
   "users/fetchAllUsers",
   async () => {
     try {
-      const response = await axios.get(SERVER_URL + "/users");
+      const response = await axios.get(import.meta.env.VITE_URL + "/users");
       const data = response.data;
       return data;
     } catch (err) {
@@ -41,7 +38,10 @@ export const fetchUser = createAsyncThunk(
   "user/fetchUser",
   async (user: { username: string; password?: string; userId?: string }) => {
     try {
-      const response = await axios.post(SERVER_URL + "/users/login", user);
+      const response = await axios.post(
+        import.meta.env.VITE_URL + "/users/login",
+        user
+      );
       const data = response.data[0];
       return data;
     } catch (err) {
@@ -54,7 +54,10 @@ export const fetchUser = createAsyncThunk(
 
 export const addUser = createAsyncThunk("user/addUser", async (user: User) => {
   try {
-    const response = await axios.post(SERVER_URL + "/users/signup", user);
+    const response = await axios.post(
+      import.meta.env.VITE_URL + "/users/signup",
+      user
+    );
     return response.data;
   } catch (err) {
     let message = "Unknown Error";
@@ -68,7 +71,7 @@ export const saveSocketSession = createAsyncThunk(
   async (userSocket: { userId: string; socketId: string }) => {
     try {
       const response = await axios.post(
-        SERVER_URL + "/socket/save-id",
+        import.meta.env.VITE_URL + "/socket/save-id",
         userSocket
       );
       return response.data;
@@ -89,7 +92,7 @@ export const addNewFriend = createAsyncThunk(
   }) => {
     try {
       const response = await axios.post(
-        SERVER_URL + "/users/add-friend",
+        import.meta.env.VITE_URL + "/users/add-friend",
         updatedUser
       );
       console.log("good");
@@ -113,11 +116,47 @@ export const saveNewMessage = createAsyncThunk(
   }) => {
     try {
       const response = await axios.post(
-        SERVER_URL + "/users/add-message",
+        import.meta.env.VITE_URL + "/users/add-message",
         message
       );
       console.log(response.data);
       return response.data; // should return the new updated user
+    } catch (err) {
+      let message = "Unknown Error";
+      if (err instanceof Error) message = err.message;
+      console.log("error");
+      return message;
+    }
+  }
+);
+
+export const updateUserInfo = createAsyncThunk(
+  "user/updateUserInfo",
+  async (newInfo: PersonalInfo) => {
+    try {
+      const response = await axios.post(
+        import.meta.env.VITE_URL + "/users/update-settings",
+        newInfo
+      );
+      return response.data;
+    } catch (err) {
+      let message = "Unknown Error";
+      if (err instanceof Error) message = err.message;
+      console.log("error");
+      return message;
+    }
+  }
+);
+
+export const updateUserSettings = createAsyncThunk(
+  "user/updateUserSettings",
+  async (newSettings: UserSettings) => {
+    try {
+      const response = await axios.post(
+        import.meta.env.VITE_URL + "/users/update-settings",
+        newSettings
+      );
+      return response.data;
     } catch (err) {
       let message = "Unknown Error";
       if (err instanceof Error) message = err.message;
@@ -170,13 +209,25 @@ const userSlice = createSlice({
         state.user = action.payload;
       })
       .addCase(addNewFriend.rejected, (state, action) => {
-        console.log(action.error.message);
+        state.error = action.error.message;
+        state.status = "error";
       })
       .addCase(saveNewMessage.pending, (state) => {
         state.status = "loading";
       })
       .addCase(saveNewMessage.fulfilled, (state, action) => {
         state.user = action.payload;
+        state.status = "succeeded";
+      })
+      .addCase(updateUserInfo.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(updateUserInfo.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.status = "succeeded";
+      })
+      .addCase(updateUserSettings.fulfilled, (state, action) => {
+        state.settings = action.payload;
         state.status = "succeeded";
       });
   },
@@ -203,6 +254,7 @@ export const getAllUsers = (state: RootState) => state.user.users;
 // Get status and error selecters
 export const getUserStatus = (state: RootState) => state.user.status;
 export const getUserError = (state: RootState) => state.user.error;
+export const getuserSettings = (state: RootState) => state.user.settings;
 
 export const { removeUser } = userSlice.actions;
 export default userSlice.reducer;
