@@ -89,34 +89,6 @@ export interface FriendsLetters {
   Y: Friend[];
   Z: Friend[];
 }
-const FriendAlphabet: FriendsLetters = {
-  A: [],
-  B: [],
-  C: [],
-  D: [],
-  E: [],
-  F: [],
-  G: [],
-  H: [],
-  I: [],
-  J: [],
-  K: [],
-  L: [],
-  M: [],
-  N: [],
-  O: [],
-  P: [],
-  Q: [],
-  R: [],
-  S: [],
-  T: [],
-  U: [],
-  V: [],
-  W: [],
-  X: [],
-  Y: [],
-  Z: [],
-};
 
 export const friendLetterObj = (friends: Friend[]) => {
   let letterObj: FriendsLetters = {
@@ -149,12 +121,33 @@ export const friendLetterObj = (friends: Friend[]) => {
   };
   for (let i = 0; i < friends.length; i++) {
     const friendNameLetter = friends[i].firstname.slice(0, 1);
-    letterObj[friendNameLetter.toUpperCase() as keyof typeof FriendAlphabet] = [
-      ...letterObj[
-        friendNameLetter.toUpperCase() as keyof typeof FriendAlphabet
-      ],
+    letterObj[friendNameLetter.toUpperCase() as keyof typeof letterObj] = [
+      ...letterObj[friendNameLetter.toUpperCase() as keyof typeof letterObj],
       friends[i],
     ];
   }
   return letterObj;
+};
+
+export const updateCssSettings = (
+  mode: boolean,
+  styles: CSSStyleDeclaration
+) => {
+  if (mode) {
+    styles.setProperty("--text-light", "#fdfdfc");
+    styles.setProperty("--text-dark", "#203136");
+    styles.setProperty("--background", "#373d47");
+    styles.setProperty("--background-dark", "#0a1d37");
+    styles.setProperty("--btn-light", "#acbec7");
+    styles.setProperty("--btn-dark", "#303a40");
+    styles.setProperty("--accent", "#405e6d");
+  } else {
+    styles.setProperty("--text-light", "#fdfdfc");
+    styles.setProperty("--text-dark", "#0d1011");
+    styles.setProperty("--background", "#fdfdfc");
+    styles.setProperty("--background-dark", "#042d64");
+    styles.setProperty("--btn-light", "#d0d8dc");
+    styles.setProperty("--btn-dark", "#303a40");
+    styles.setProperty("--accent", "#658393");
+  }
 };

@@ -18,8 +18,9 @@ import "./css/credentials.css";
 import "./css/profile.css";
 import "./css/messages.css";
 import { useAppSelector } from "./app/hooks";
-import { getuserSettings } from "./features/users/userSlice";
+import { getuserSettings, getUser } from "./features/users/userSlice";
 import { useEffect } from "react";
+import { updateCssSettings } from "./app/userHook";
 
 const socket: Socket = io("http://localhost:3000", {
   autoConnect: false,
@@ -27,17 +28,29 @@ const socket: Socket = io("http://localhost:3000", {
 
 function App() {
   const userSettings = useAppSelector(getuserSettings);
+  const user = useAppSelector(getUser);
   const checkUserMode = () => {
-    const isDark = userSettings?.isDarkMode;
-    const styles = getComputedStyle(document.documentElement).getPropertyValue(
-      "--btn-dark"
-    );
-    console.log(styles);
+    const isDark = userSettings?.isDarkMode || false;
+    console.log(isDark);
+    if (isDark) {
+      document.documentElement.classList.toggle("notDark")
+        ? document.documentElement.classList.toggle("notDark")
+        : void 0;
+      document.documentElement.classList.toggle("dark");
+    } else {
+      document.documentElement.classList.toggle("dark")
+        ? document.documentElement.classList.toggle("dark")
+        : void 0;
+      document.documentElement.classList.toggle("notDark");
+    }
+    // isDark
+    //   ? document.documentElement.classList.toggle("dark")
+    //   : document.documentElement.classList.toggle("notDark");
   };
 
   useEffect(() => {
-    checkUserMode();
-  }, []);
+    if (user) checkUserMode();
+  }, [userSettings]);
   return (
     <Router>
       <Routes>

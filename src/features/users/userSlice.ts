@@ -42,7 +42,7 @@ export const fetchUser = createAsyncThunk(
         import.meta.env.VITE_URL + "/users/login",
         user
       );
-      const data = response.data[0];
+      const data = response.data;
       return data;
     } catch (err) {
       let message = "Unknown Error";
@@ -135,7 +135,7 @@ export const updateUserInfo = createAsyncThunk(
   async (newInfo: PersonalInfo) => {
     try {
       const response = await axios.post(
-        import.meta.env.VITE_URL + "/users/update-settings",
+        import.meta.env.VITE_URL + "/users/update-info",
         newInfo
       );
       return response.data;
@@ -190,7 +190,8 @@ const userSlice = createSlice({
         state.error = action.error.message;
       })
       .addCase(fetchUser.fulfilled, (state, action) => {
-        state.user = action.payload;
+        state.user = action.payload.user;
+        state.settings = action.payload.settings;
         state.status = "succeeded";
       })
       .addCase(fetchAllUsers.pending, (state) => {

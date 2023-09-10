@@ -7,6 +7,26 @@
   --btn-dark: #303a40;
   --accent: #658393;
 }
+
+:root.dark {
+  --text-light: #fdfdfc;
+  --text-dark: #658393;
+  --background: #373d47;
+  --background-dark: #0a1d37;
+  --btn-light: #acbec7;
+  --btn-dark: #303a40;
+  --accent: #405e6d;
+}
+
+:root.notDark {
+  --text-light: #fdfdfc;
+  --text-dark: #0d1011;
+  --background: #fdfdfc;
+  --background-dark: #042d64;
+  --btn-light: #d0d8dc;
+  --btn-dark: #303a40;
+  --accent: #658393;
+}
 /* 
 TO CHANGE FOR MORE MONOCHROME COLORS
 --text-light: #FDFDFC;
@@ -34,7 +54,7 @@ TO CHANGE FOR MORE MONOCHROME COLORS
 
 html {
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
-  background-color: #fbfcfd;
+  background-color: var(--background);
   color: var(--text-dark);
 }
 
@@ -48,8 +68,8 @@ body {
   padding: 1rem;
   justify-content: space-between;
   align-items: flex-start;
-  color: whitesmoke;
-  background-color: #042d64;
+  color: var(--text-light);
+  background-color: var(--background-dark);
   position: sticky;
   top: 0;
   box-shadow: 0px 6px 10px -3px rgba(0, 0, 0, 0.75);
@@ -72,7 +92,7 @@ nav ul li {
 nav a,
 nav a:visited {
   text-decoration: none;
-  color: whitesmoke;
+  color: var(--text-light);
 }
 
 nav a:focus,

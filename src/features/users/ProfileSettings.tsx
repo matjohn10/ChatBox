@@ -1,13 +1,22 @@
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { getUser, updateUserInfo, updateUserSettings } from "./userSlice";
+import {
+  getUser,
+  updateUserInfo,
+  updateUserSettings,
+  getUserStatus,
+  getuserSettings,
+} from "./userSlice";
 
 const ProfileSettings = () => {
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useState(
+    useAppSelector(getuserSettings)?.isDarkMode
+  );
   const [newUsername, setNewUsername] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [newEmail, setNewEmail] = useState("");
   const user = useAppSelector(getUser);
+  const status = useAppSelector(getUserStatus);
   const [bgColor, setBgColor] = useState(user?.bgColor);
   const dispatch = useAppDispatch();
 
@@ -23,6 +32,9 @@ const ProfileSettings = () => {
     setNewEmail(e.currentTarget.value);
   const onChangeColor = (e: React.ChangeEvent<HTMLInputElement>) =>
     setBgColor(e.currentTarget.value);
+  const onChangeClick = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsDark(e.currentTarget.checked);
+  };
 
   const onModeChange = () => {
     dispatch(
@@ -48,7 +60,12 @@ const ProfileSettings = () => {
     <article className="profileSettingArticle">
       <div className="toggleDarkDiv">
         <label htmlFor="lightDark" className="switch" onClick={onModeChange}>
-          <input type="checkbox" />
+          <input
+            type="checkbox"
+            checked={isDark}
+            onChange={(e) => onChangeClick}
+            disabled={status === "loading"}
+          />
         </label>
         <span>{`${isDark ? "Dark" : "Light"} Mode`}</span>
       </div>

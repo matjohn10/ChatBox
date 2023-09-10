@@ -77,8 +77,9 @@
   border-radius: 5px;
   font-size: large;
   font-family: "Times New Roman", Times, serif;
-  background-color: var(--accent);
-  color: var(--text-light);
+  background-color: var(--background);
+  box-shadow: 0 0 2px 2px black;
+  color: var(--text-dark);
 }
 
 .sendMessageForm button {
@@ -118,8 +119,16 @@
 .sentMessage div {
   background-color: lightblue;
 }
+.sentMessage p,
+.sentMessage span {
+  color: black;
+}
 
 .textMessage {
   padding: 0.375rem;
   border-radius: 0.5rem;
+}
+.textMessage p,
+.textMessage span {
+  color: black;
 }
