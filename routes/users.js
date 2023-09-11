@@ -1,13 +1,24 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
-const { User } = require("../assets/usersDb");
+const { User, UserSettings } = require("../assets/usersDb");
 
 router.post("/login", async (req, res) => {
   const user = await User.find(req.body);
+  const settings = await UserSettings.findOne({ userId: user[0].userId });
 
   try {
-    res.send(user);
+    if (settings === null) {
+      const newSet = new UserSettings({
+        userId: user[0].userId,
+        isDarkMode: false,
+        bgColor: user[0].bgColor,
+      });
+      await newSet.save();
+      res.send({ user: user[0], settings: newSet });
+    } else {
+      res.send({ user: user[0], settings });
+    }
   } catch (error) {
     res.status(500).send(error);
   }
@@ -15,9 +26,15 @@ router.post("/login", async (req, res) => {
 
 router.post("/signup", async (req, res) => {
   const user = new User(req.body);
+  const UserSettings = new UserSettings({
+    userId: req.body.userId,
+    isDarkMode: false,
+    bgColor: req.body.bgColor,
+  });
 
   try {
     await user.save();
+    await UserSettings.save();
     res.send(user);
   } catch (error) {
     res.status(500).send(error);
@@ -99,6 +116,42 @@ router.post("/add-message", async (req, res) => {
     await from.save();
 
     res.send(from);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+router.post("/update-info", async (req, res) => {
+  const reqObj = { ...req.body };
+  //Mutates the object to remove empty key-value pairs
+  Object.keys(reqObj).forEach((key) => !reqObj[key] && delete reqObj[key]);
+  delete reqObj.userId;
+  const user = await User.findOneAndUpdate(
+    { userId: req.body.userId },
+    reqObj,
+    {
+      new: true,
+    }
+  );
+
+  try {
+    if (user === null) throw "No matching user";
+    res.send(user);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+router.post("/update-settings", async (req, res) => {
+  const settings = await UserSettings.findOneAndReplace(
+    { userId: req.body.userId },
+    req.body,
+    { returnDocument: "after" }
+  );
+
+  try {
+    if (settings === null) throw "No matching user settings";
+    res.send(settings);
   } catch (error) {
     res.status(500).send(error);
   }

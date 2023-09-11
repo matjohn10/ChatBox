@@ -69,6 +69,26 @@ const UserSocketSchema = new mongoose.Schema({
   },
 });
 
+const UserSettingsSchema = new mongoose.Schema({
+  userId: {
+    type: String,
+    required: true,
+  },
+  isDarkMode: {
+    type: Boolean,
+    required: true,
+  },
+  bgColor: {
+    type: String,
+    required: true,
+  },
+});
+
 const User = mongoose.model("User", UserSchema);
 const UserSocket = mongoose.model("UserSocket", UserSocketSchema);
-module.exports = { User: User, UserSocket: UserSocket };
+const UserSettings = mongoose.model("UserSettings", UserSettingsSchema);
+module.exports = {
+  User: User,
+  UserSocket: UserSocket,
+  UserSettings: UserSettings,
+};
