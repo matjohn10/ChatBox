@@ -40,7 +40,7 @@ export const fetchAllUsers = createAsyncThunk(
 
 export const fetchUser = createAsyncThunk(
   "user/fetchUser",
-  async (user: { username: string; password?: string; userId?: string }) => {
+  async (user: { username?: string; password?: string; userId?: string }) => {
     try {
       const response = await axios.post(
         import.meta.env.VITE_URL + "/users/login",
@@ -129,6 +129,29 @@ export const saveNewMessage = createAsyncThunk(
       let message = "Unknown Error";
       if (err instanceof Error) message = err.message;
       console.log("error");
+      return message;
+    }
+  }
+);
+
+export const saveGroupMessage = createAsyncThunk(
+  "user/saveGroupMessage",
+  async (message: {
+    from: string;
+    group: Room | undefined;
+    content: string;
+    date: string;
+  }) => {
+    try {
+      const response = await axios.post(
+        import.meta.env.VITE_URL + "/users/add-group-message",
+        message
+      );
+      return response.data;
+    } catch (err) {
+      let message = "Unknown Error";
+      if (err instanceof Error) message = err.message;
+      console.log("error", message);
       return message;
     }
   }
@@ -244,6 +267,13 @@ const userSlice = createSlice({
         state.status = "loading";
       })
       .addCase(saveNewMessage.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.status = "succeeded";
+      })
+      .addCase(saveGroupMessage.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(saveGroupMessage.fulfilled, (state, action) => {
         state.user = action.payload;
         state.status = "succeeded";
       })

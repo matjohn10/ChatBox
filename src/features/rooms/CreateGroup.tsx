@@ -74,7 +74,7 @@ const CreateGroup = ({ socket }: Props) => {
     dispatch(addRoom(data));
 
     // socket emit to tell friends they were added in a group chat
-    socket.emit("room-created", room);
+    socket.emit("room-created", { room, user: user?.username });
 
     setGroupName("");
     setToAdd([]);

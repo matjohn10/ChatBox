@@ -8,6 +8,8 @@ import {
   fetchUser,
   getUserStatus,
   getRoomById,
+  getFriends,
+  saveGroupMessage,
 } from "../users/userSlice";
 import { Socket } from "socket.io-client";
 import ConversationExcerpts from "../users/ConversationExcerpts";
@@ -25,9 +27,12 @@ const PersonalMessagePage = ({ socket }: Props) => {
   const onChangeMessage = (e: React.ChangeEvent<HTMLInputElement>) =>
     setMessage(e.currentTarget.value);
   const { friendId } = useParams();
+
+  // UseAppSelector Variables
   const friend = useAppSelector((state) =>
     getFriendById(state, friendId || "")
   );
+  const friends = useAppSelector(getFriends);
   const room = useAppSelector((state) => getRoomById(state, friendId || ""));
   const conversation = useAppSelector((state) =>
     getConvoFromRoomOrFriendId(state, friendId || "")
@@ -35,16 +40,19 @@ const PersonalMessagePage = ({ socket }: Props) => {
   const user = useAppSelector(getUser);
   const status = useAppSelector(getUserStatus);
 
-  const sendMessageToAllGroup = (id: string) => {
-    const memberInfo = useAppSelector((state) => getFriendById(state, id));
-    const data = {
-      content: message,
-      to: memberInfo?.userId || "",
-      from: user?.userId || "",
-      date: new Date().toISOString(),
-    };
-    dispatch(saveNewMessage(data));
-  };
+  // const sendMessageToAllGroup = (id: string, convoId: string) => {
+  //   // const memberInfo = useAppSelector((state) => getFriendById(state, id));
+  //   const memberInfo = friends.find((friend) => friend.userId === id);
+
+  //   const data = {
+  //     content: message,
+  //     to: memberInfo?.userId || "",
+  //     convoId,
+  //     from: user?.userId || "",
+  //     date: new Date().toISOString(),
+  //   };
+  //   dispatch(saveGroupMessage(data));
+  // };
 
   const onSendMessage = (
     e:
@@ -62,13 +70,16 @@ const PersonalMessagePage = ({ socket }: Props) => {
       dispatch(saveNewMessage(data));
       if (status === "succeeded") socket.emit("message_to_friend", data);
     } else {
-      room?.members.map((memberId) => sendMessageToAllGroup(memberId.userId));
+      // room?.members.map((member) =>
+      //   sendMessageToAllGroup(member.userId, room.roomId)
+      // );
       const data = {
         content: message,
         group: room,
         from: user?.userId || "",
         date: new Date().toISOString(),
       };
+      dispatch(saveGroupMessage(data));
       if (status === "succeeded") socket.emit("message_to_group", data);
     }
 

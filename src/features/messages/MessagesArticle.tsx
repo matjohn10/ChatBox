@@ -11,7 +11,7 @@ const MessagesArticle = ({ conversation }: Props) => {
     content: string;
     date: string;
   }[] = [...(conversation?.sent || []), ...(conversation?.received || [])].sort(
-    (a, b) => a.date.localeCompare(b.date)
+    (a, b) => b.date.localeCompare(a.date)
   );
   const renderedMessages = allmessagesSortedbyDate.map((message) => (
     <div

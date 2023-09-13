@@ -35,7 +35,16 @@ const UserPage = ({ socket }: Props) => {
     });
 
     //listening for group chat
-    socket.on("added-to-chat", (data) => {});
+    socket.on(
+      "added-to-chat",
+      (data: { friend: { username: string }; room: { name: string } }) => {
+        alert(
+          `You were added to the ${data.room.name} chatting group by\nyour friend ${data.friend.username}`
+        );
+        //update the info here and double check
+        dispatch(fetchUser({ username: user?.username, userId: user?.userId })); // change that password for email, if password not given
+      }
+    );
   }, [socket]);
 
   return (
