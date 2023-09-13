@@ -26,14 +26,33 @@ module.exports = function socketMW(httpServer) {
     });
 
     // REAL APP LISTEN
+
+    //Added to room/friend
     socket.on("add_personal_room", (data) => {
       if (data.room) socket.join(data.room);
     });
     socket.on("friend_added", ({ user, friend }) => {
       socket.to(friend.userId).emit("friend_added", { user: friend });
     });
+    socket.on("room-created", (data) => {
+      data.room.members.map((member) => {
+        socket
+          .to(member.userId)
+          .emit("added-to-chat", {
+            friend: { username: data.user },
+            room: { name: data.room.name },
+          });
+      });
+    });
+
+    //Socket for messages
     socket.on("message_to_friend", (data) => {
-      socket.to(data.to).emit("message_from_friend", data);
+      socket.to(data.to).emit("message_from_friend");
+    });
+    socket.on("message_to_group", (data) => {
+      data.group.members.map((member) => {
+        socket.to(member.userId).emit("message_from_friend");
+      });
     });
   });
 };
