@@ -53,7 +53,15 @@ const ProfileSettings = () => {
       | React.FormEvent<HTMLFormElement>
   ) => {
     e.preventDefault();
-    dispatch(updateUserInfo({ newUsername, newPassword, newEmail, bgColor }));
+    dispatch(
+      updateUserInfo({
+        userId: user?.userId,
+        username: newUsername,
+        password: newPassword,
+        email: newEmail,
+        bgColor,
+      })
+    );
   };
 
   return (
@@ -63,7 +71,7 @@ const ProfileSettings = () => {
           <input
             type="checkbox"
             checked={isDark}
-            onChange={(e) => onChangeClick}
+            onChange={onChangeClick}
             disabled={status === "loading"}
           />
         </label>

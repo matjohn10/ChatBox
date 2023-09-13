@@ -265,6 +265,10 @@ input {
   padding-right: 6rem;
 }
 
+.hoverP:hover {
+  cursor: pointer;
+}
+
 /* Userid page css */
 
 .shareIdDiv {

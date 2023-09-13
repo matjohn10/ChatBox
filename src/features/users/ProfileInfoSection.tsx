@@ -10,13 +10,22 @@ interface Props {
   user: User | null | undefined;
   selectedMenu: string;
   socket: Socket;
+  setIsCreateChat: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ProfileInfoSection = ({ user, selectedMenu, socket }: Props) => {
+const ProfileInfoSection = ({
+  user,
+  selectedMenu,
+  socket,
+  setIsCreateChat,
+}: Props) => {
   const menuItems = [
     <ProfileSettings />,
     <FriendsList user={user} />,
-    <ConversationExcerpts />,
+    <ConversationExcerpts
+      setIsCreateChat={setIsCreateChat}
+      plusChatOn={true}
+    />,
     <FriendFinder socket={socket} />,
     <ShareId />,
   ];

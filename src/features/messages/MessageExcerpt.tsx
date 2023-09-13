@@ -21,12 +21,16 @@ const MessageExcerpt = ({ conversation }: Props) => {
         <p>{convoFriend.firstname}</p>
       ) : (
         <p>
-          {convoRoom?.members.map((member) => (
+          {convoRoom?.name}
+          {/* {convoRoom?.members.slice(0, 4).map((member) => (
             <span key={Math.random()}>
-              {friends.find((friend) => friend.userId === member)?.firstname}
+              {
+                friends.find((friend) => friend.userId === member.userId)
+                  ?.firstname
+              }
               &nbsp;{" "}
             </span>
-          ))}
+          ))} */}
         </p>
       )}{" "}
       <Link to={`/messages/${conversation.convoId}`}>

@@ -1,7 +1,8 @@
 export interface PersonalInfo {
-  newUsername?: string;
-  newEmail?: string;
-  newPassword?: string;
+  userId: string | undefined;
+  username: string;
+  email: string;
+  password: string;
   bgColor?: string;
 }
 
@@ -26,8 +27,9 @@ export interface Friend {
 }
 
 export interface Room {
+  name: string;
   roomId: string;
-  members: string[];
+  members: Friend[];
 }
 
 export interface User extends Friend {

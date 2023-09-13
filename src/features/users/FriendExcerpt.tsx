@@ -14,12 +14,11 @@ const FriendExcerpt = ({ friend }: Props) => {
   return (
     <div className="friendExcerptDiv" key={Math.random()}>
       <div className="userNames">
-        <p>
+        <p className="hoverP" onClick={onMessageFriendClick}>
           {friend.firstname}&nbsp; {friend.lastname}
         </p>
         <p className="usernameText">#{friend.username}</p>
       </div>
-
       <Unicons.UilMessage
         color={friend.bgColor}
         className="addFriendBtn"

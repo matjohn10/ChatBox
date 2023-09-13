@@ -17,10 +17,10 @@ import "./css/index.css";
 import "./css/credentials.css";
 import "./css/profile.css";
 import "./css/messages.css";
+import "./css/rooms.css";
 import { useAppSelector } from "./app/hooks";
 import { getuserSettings, getUser } from "./features/users/userSlice";
 import { useEffect } from "react";
-import { updateCssSettings } from "./app/userHook";
 
 const socket: Socket = io("http://localhost:3000", {
   autoConnect: false,
@@ -31,7 +31,6 @@ function App() {
   const user = useAppSelector(getUser);
   const checkUserMode = () => {
     const isDark = userSettings?.isDarkMode || false;
-    console.log(isDark);
     if (isDark) {
       document.documentElement.classList.toggle("notDark")
         ? document.documentElement.classList.toggle("notDark")
@@ -43,9 +42,6 @@ function App() {
         : void 0;
       document.documentElement.classList.toggle("notDark");
     }
-    // isDark
-    //   ? document.documentElement.classList.toggle("dark")
-    //   : document.documentElement.classList.toggle("notDark");
   };
 
   useEffect(() => {

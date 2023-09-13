@@ -1,10 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import type { RootState } from "../../app/store";
-import { Friend, PersonalInfo, User, UserSettings } from "../../app/userHook";
+import {
+  Friend,
+  PersonalInfo,
+  Room,
+  User,
+  UserSettings,
+} from "../../app/userHook";
 import axios from "axios";
-
-// import.meta.env.VITE_URL = "http://localhost:3000";
 
 interface InitialUserState {
   user?: User | null;
@@ -142,7 +146,7 @@ export const updateUserInfo = createAsyncThunk(
     } catch (err) {
       let message = "Unknown Error";
       if (err instanceof Error) message = err.message;
-      console.log("error");
+      console.log("error", message);
       return message;
     }
   }
@@ -155,6 +159,29 @@ export const updateUserSettings = createAsyncThunk(
       const response = await axios.post(
         import.meta.env.VITE_URL + "/users/update-settings",
         newSettings
+      );
+      return response.data;
+    } catch (err) {
+      let message = "Unknown Error";
+      if (err instanceof Error) message = err.message;
+      console.log("error");
+      return message;
+    }
+  }
+);
+
+export const addRoom = createAsyncThunk(
+  "user/addRoom",
+  async (newRoom: {
+    room: Room;
+    user: User | null | undefined;
+    date: string;
+    content: string;
+  }) => {
+    try {
+      const response = await axios.post(
+        import.meta.env.VITE_URL + "/users/add-room",
+        newRoom
       );
       return response.data;
     } catch (err) {
@@ -230,6 +257,13 @@ const userSlice = createSlice({
       .addCase(updateUserSettings.fulfilled, (state, action) => {
         state.settings = action.payload;
         state.status = "succeeded";
+      })
+      .addCase(addRoom.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(addRoom.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.status = "succeeded";
       });
   },
 });
@@ -245,6 +279,8 @@ export const getFriendById = (state: RootState, userId: string) =>
 export const getConversations = (state: RootState) =>
   state.user.user?.conversations;
 export const getRooms = (state: RootState) => state.user.user?.rooms;
+export const getRoomById = (state: RootState, roomId: string) =>
+  state.user.user?.rooms.find((room) => room.roomId === roomId);
 
 export const getConvoFromRoomOrFriendId = (state: RootState, Id: string) =>
   state.user.user?.conversations.find((convo) => convo.convoId === Id);
