@@ -1,3 +1,5 @@
+const { User } = require("../assets/usersDb");
+
 module.exports = function socketMW(httpServer) {
   const { Server } = require("socket.io");
   const io = new Server(httpServer, {
@@ -36,22 +38,28 @@ module.exports = function socketMW(httpServer) {
     });
     socket.on("room-created", (data) => {
       data.room.members.map((member) => {
-        socket
-          .to(member.userId)
-          .emit("added-to-chat", {
-            friend: { username: data.user },
-            room: { name: data.room.name },
-          });
+        socket.to(member.userId).emit("added-to-chat", {
+          friend: { username: data.user },
+          room: { name: data.room.name },
+        });
       });
     });
 
     //Socket for messages
-    socket.on("message_to_friend", (data) => {
-      socket.to(data.to).emit("message_from_friend");
+    socket.on("message_to_friend", async (data) => {
+      const toUser = await User.findOne({
+        userId: data.to,
+      });
+      console.log(toUser.conversations[1]);
+      socket.to(data.to).emit("message_from_friend", { user: toUser });
     });
-    socket.on("message_to_group", (data) => {
-      data.group.members.map((member) => {
-        socket.to(member.userId).emit("message_from_friend");
+    socket.on("message_to_group", async (data) => {
+      data.group.members.map(async (member) => {
+        const toUser = await User.findOne({
+          userId: member.userId,
+          username: member.username,
+        });
+        socket.to(member.userId).emit("message_from_friend", { user: toUser });
       });
     });
   });
