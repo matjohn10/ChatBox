@@ -1,11 +1,11 @@
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import { getUser, saveSocketSession, fetchUser } from "./userSlice";
+import { getUser, saveSocketSession, fetchUser, updateUser } from "./userSlice";
 import ProfileInfoSection from "./ProfileInfoSection";
 import ProfileNavSection from "./ProfileNavSection";
 import CreateRoom from "../rooms/CreateRoom";
 import { useState, useEffect } from "react";
 import { Socket } from "socket.io-client";
-import { Friend } from "../../app/userHook";
+import { Friend, User } from "../../app/userHook";
 
 interface Props {
   socket: Socket;
@@ -45,6 +45,11 @@ const UserPage = ({ socket }: Props) => {
         dispatch(fetchUser({ username: user?.username, userId: user?.userId })); // change that password for email, if password not given
       }
     );
+
+    // listening to messages send to current user
+    socket.on("message_from_friend", ({ user }: { user: User }) => {
+      dispatch(updateUser(user));
+    });
   }, [socket]);
 
   return (

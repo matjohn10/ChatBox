@@ -5,16 +5,17 @@ import {
   getFriendById,
   getUser,
   saveNewMessage,
-  fetchUser,
   getUserStatus,
   getRoomById,
   getFriends,
   saveGroupMessage,
+  updateUser,
 } from "../users/userSlice";
 import { Socket } from "socket.io-client";
 import ConversationExcerpts from "../users/ConversationExcerpts";
 import { useState, useEffect } from "react";
 import MessagesArticle from "./MessagesArticle";
+import { User } from "../../app/userHook";
 
 interface Props {
   socket: Socket;
@@ -32,7 +33,7 @@ const PersonalMessagePage = ({ socket }: Props) => {
   const friend = useAppSelector((state) =>
     getFriendById(state, friendId || "")
   );
-  const friends = useAppSelector(getFriends);
+  // const friends = useAppSelector(getFriends);
   const room = useAppSelector((state) => getRoomById(state, friendId || ""));
   const conversation = useAppSelector((state) =>
     getConvoFromRoomOrFriendId(state, friendId || "")
@@ -40,21 +41,7 @@ const PersonalMessagePage = ({ socket }: Props) => {
   const user = useAppSelector(getUser);
   const status = useAppSelector(getUserStatus);
 
-  // const sendMessageToAllGroup = (id: string, convoId: string) => {
-  //   // const memberInfo = useAppSelector((state) => getFriendById(state, id));
-  //   const memberInfo = friends.find((friend) => friend.userId === id);
-
-  //   const data = {
-  //     content: message,
-  //     to: memberInfo?.userId || "",
-  //     convoId,
-  //     from: user?.userId || "",
-  //     date: new Date().toISOString(),
-  //   };
-  //   dispatch(saveGroupMessage(data));
-  // };
-
-  const onSendMessage = (
+  const onSendMessage = async (
     e:
       | React.MouseEvent<HTMLButtonElement, MouseEvent>
       | React.FormEvent<HTMLFormElement>
@@ -67,32 +54,21 @@ const PersonalMessagePage = ({ socket }: Props) => {
         from: user?.userId || "",
         date: new Date().toISOString(),
       };
-      dispatch(saveNewMessage(data));
+      await dispatch(saveNewMessage(data));
       if (status === "succeeded") socket.emit("message_to_friend", data);
     } else {
-      // room?.members.map((member) =>
-      //   sendMessageToAllGroup(member.userId, room.roomId)
-      // );
       const data = {
         content: message,
         group: room,
         from: user?.userId || "",
         date: new Date().toISOString(),
       };
-      dispatch(saveGroupMessage(data));
+      await dispatch(saveGroupMessage(data));
       if (status === "succeeded") socket.emit("message_to_group", data);
     }
 
     setMessage("");
   };
-
-  useEffect(() => {
-    socket.on("message_from_friend", () => {
-      dispatch(
-        fetchUser({ username: user?.username || "", userId: user?.userId })
-      );
-    });
-  }, [socket]);
 
   return (
     <section className="messagePageSection">

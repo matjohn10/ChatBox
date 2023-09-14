@@ -123,7 +123,6 @@ export const saveNewMessage = createAsyncThunk(
         import.meta.env.VITE_URL + "/users/add-message",
         message
       );
-      console.log(response.data);
       return response.data; // should return the new updated user
     } catch (err) {
       let message = "Unknown Error";
@@ -221,6 +220,9 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     removeUser(state, action) {
+      state.user = action.payload;
+    },
+    updateUser(state, action) {
       state.user = action.payload;
     },
   },
@@ -323,5 +325,5 @@ export const getUserStatus = (state: RootState) => state.user.status;
 export const getUserError = (state: RootState) => state.user.error;
 export const getuserSettings = (state: RootState) => state.user.settings;
 
-export const { removeUser } = userSlice.actions;
+export const { removeUser, updateUser } = userSlice.actions;
 export default userSlice.reducer;
