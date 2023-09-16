@@ -63,34 +63,38 @@ const CreateGroup = ({ socket }: Props) => {
       | React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
-    // will have to create id of room here
-    const room: Room = {
-      name: groupName,
-      roomId: nanoid(),
-      members: toAdd,
-    };
-    const data: {
-      room: Room;
-      user: User | null | undefined;
-      date: string;
-      content: string;
-    } = {
-      room,
-      user,
-      date: new Date().toISOString(),
-      content: `${user?.username} created ${room.name}`,
-    };
-    // userSlice dispatch to post data to server for DB
-    // create room in DB but also an empty conversation
-    dispatch(addRoom(data));
+    if (toAdd.length < 2) {
+      alert("Not enough members to make a group.");
+    } else {
+      // will have to create id of room here
+      const room: Room = {
+        name: groupName,
+        roomId: nanoid(),
+        members: toAdd,
+      };
+      const data: {
+        room: Room;
+        user: User | null | undefined;
+        date: string;
+        content: string;
+      } = {
+        room,
+        user,
+        date: new Date().toISOString(),
+        content: `${user?.username} created ${room.name}`,
+      };
+      // userSlice dispatch to post data to server for DB
+      // create room in DB but also an empty conversation
+      dispatch(addRoom(data));
 
-    // socket emit to tell friends they were added in a group chat
-    socket.emit("room-created", { room, user: user?.username });
+      // socket emit to tell friends they were added in a group chat
+      socket.emit("room-created", { room, user: user?.username });
 
-    setGroupName("");
-    setToAdd([]);
-    // navigate to the conversation id page after added to DB
-    navigate("/messages/" + room.roomId);
+      setGroupName("");
+      setToAdd([]);
+      // navigate to the conversation id page after added to DB
+      navigate("/messages/" + room.roomId);
+    }
   };
 
   return (
@@ -118,7 +122,7 @@ const CreateGroup = ({ socket }: Props) => {
       <button
         className="createGroupBtn"
         onClick={onGroupCreation}
-        disabled={!groupName || toAdd.length < 2}
+        disabled={!groupName}
       >
         Create
       </button>

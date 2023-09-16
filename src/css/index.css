@@ -148,7 +148,7 @@ nav a:active {
 /* Index page CSS */
 .indexSection {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   gap: 1rem;
   width: 100%;
   height: 88vh;
@@ -175,7 +175,7 @@ nav a:active {
   background-color: #e3ebee;
   padding: 1rem;
   border-radius: 1rem;
-  box-shadow: 0 0 6px 5px #e3ebee;
+  box-shadow: 0 0 6px 5px #b5bfc3;
   margin: 0 1.5rem;
 }
 .welcomeArticle div h2,
@@ -197,5 +197,27 @@ nav a:active {
 }
 
 .indexStartBtn:hover {
+  color: var(--accent);
+}
+
+.loggedoutDiv {
+  margin-top: 3rem;
+  padding: 3rem;
+  background-color: #e3ebee;
+  box-shadow: 0 0 6px 5px #b5bfc3;
+  border-radius: 1rem;
+  height: fit-content;
+}
+
+.loggedOutLinksDiv {
+  display: flex;
+}
+
+.loggedOutLink,
+.loggedOutLink:visited {
+  color: var(--text-dark);
+}
+
+.loggedOutLink:hover {
   color: var(--accent);
 }

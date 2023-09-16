@@ -1,6 +1,7 @@
 import * as Unicons from "@iconscout/react-unicons";
 import { useState } from "react";
-import FriendsList from "../users/FriendsList";
+import FriendsList from "../users/FriendsListAlphabetical";
+import FriendList from "../users/FriendList";
 import CreateGroup from "./CreateGroup";
 import { User } from "../../app/userHook";
 import { Socket } from "socket.io-client";
@@ -50,11 +51,7 @@ const CreateRoom = ({ setIsCreateChat, user, socket }: Props) => {
         </div>
       </article>
       <article className="optionsChatDiv">
-        {modeSelected === 0 ? (
-          <FriendsList user={user} />
-        ) : (
-          <CreateGroup socket={socket} />
-        )}
+        {modeSelected === 0 ? <FriendList /> : <CreateGroup socket={socket} />}
       </article>
     </section>
   );

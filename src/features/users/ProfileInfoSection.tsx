@@ -1,6 +1,6 @@
 import type { User } from "../../app/userHook";
 import ProfileSettings from "./ProfileSettings";
-import FriendsList from "./FriendsList";
+import FriendsList from "./FriendsListAlphabetical";
 import FriendFinder from "./FriendFinder";
 import ConversationExcerpts from "./ConversationExcerpts";
 import ShareId from "./ShareId";

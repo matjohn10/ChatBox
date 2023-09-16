@@ -21,6 +21,11 @@ h5 {
   overflow-y: scroll;
 }
 
+.createRoomSection::-webkit-scrollbar {
+  display: none;
+  width: none;
+}
+
 .createConvoTitle {
   display: flex;
   width: 100%;
@@ -112,6 +117,10 @@ h5 {
   overflow-y: scroll;
   padding-top: 0.5rem;
 }
+.friendsToAddDiv::-webkit-scrollbar {
+  display: none;
+  width: none;
+}
 
 .friendListForGroup p {
   font-size: 1rem;
@@ -154,4 +163,22 @@ h5 {
 .createGroupBtn:hover {
   cursor: pointer;
   opacity: 0.9;
+}
+
+.createGroupBtn:disabled {
+  opacity: 0.75;
+  background-color: var(--text-light);
+}
+
+.addFriendChatDiv {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+  overflow-y: scroll;
+}
+
+.addFriendChatDiv::-webkit-scrollbar {
+  display: none;
+  width: none;
 }
