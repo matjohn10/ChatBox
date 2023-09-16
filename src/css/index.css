@@ -144,3 +144,58 @@ nav a:active {
 .dropDownContent a {
   font-size: 1.3rem;
 }
+
+/* Index page CSS */
+.indexSection {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  width: 100%;
+  height: 88vh;
+  padding: 4rem 7rem;
+  background-image: url("../assets/img/indexImage.jpg");
+  background-size: cover;
+  background-repeat: repeat-y;
+}
+
+.welcomeArticle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 35%;
+}
+.welcomeArticle div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  min-height: 261px;
+  min-width: 254.75px;
+  background-color: #e3ebee;
+  padding: 1rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 6px 5px #e3ebee;
+  margin: 0 1.5rem;
+}
+.welcomeArticle div h2,
+.welcomeArticle div p {
+  text-align: center;
+  color: var(--text-dark);
+}
+
+.imageIndexArticle {
+  display: flex;
+  width: 65%;
+}
+
+.indexStartBtn,
+.indexStartBtn:visited {
+  margin: 0;
+  color: var(--text-dark);
+  font-size: 1.75rem;
+}
+
+.indexStartBtn:hover {
+  color: var(--accent);
+}

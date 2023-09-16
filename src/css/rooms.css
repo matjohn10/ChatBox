@@ -132,6 +132,13 @@ h5 {
   text-align: left;
   gap: 0.5rem;
   padding-top: 0.5rem;
+  width: 90%;
+}
+.friendInGroup {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
 }
 
 .createGroupBtn {

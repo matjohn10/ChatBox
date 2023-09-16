@@ -5,6 +5,7 @@ import { useState } from "react";
 import * as Unicons from "@iconscout/react-unicons";
 import { nanoid } from "@reduxjs/toolkit";
 import { Socket } from "socket.io-client";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   socket: Socket;
@@ -14,6 +15,7 @@ const CreateGroup = ({ socket }: Props) => {
   const friends = useAppSelector(getFriends);
   const user = useAppSelector(getUser);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [groupName, setGroupName] = useState("");
   const [toAdd, setToAdd] = useState<Friend[]>([]);
 
@@ -22,6 +24,9 @@ const CreateGroup = ({ socket }: Props) => {
 
   const onAdd = (friend: Friend) => {
     setToAdd((prev) => [...prev, friend]);
+  };
+  const onRemove = (friend: Friend) => {
+    setToAdd(toAdd.filter((f) => f.userId !== friend.userId));
   };
 
   const renderedFriends = friends.map((friend) => (
@@ -43,6 +48,12 @@ const CreateGroup = ({ socket }: Props) => {
       <p>
         {friend.firstname}&nbsp; {friend.lastname}
       </p>
+      <Unicons.UilMinusCircle
+        color="var(--accent)"
+        size="20"
+        className="addFriendBtn"
+        onClick={() => onRemove(friend)} //change here
+      />
     </div>
   ));
 
@@ -79,6 +90,7 @@ const CreateGroup = ({ socket }: Props) => {
     setGroupName("");
     setToAdd([]);
     // navigate to the conversation id page after added to DB
+    navigate("/messages/" + room.roomId);
   };
 
   return (
