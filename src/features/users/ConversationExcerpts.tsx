@@ -29,7 +29,9 @@ const ConversationExcerpts = (props: {
           <></>
         )}
       </h2>
-      <div className="messagesDiv">{renderedMessages}</div>
+      <div className="messagesDiv" key={Math.random()}>
+        {renderedMessages}
+      </div>
     </div>
   );
 };

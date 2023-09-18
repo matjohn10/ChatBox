@@ -19,7 +19,7 @@ const FriendsList = ({}: Props) => {
           <>
             <h3>{letter}</h3>
             <div className="straightLine"></div>
-            <div className="friendsExcerptsDiv">
+            <div className="friendsExcerptsDiv" key={Math.random()}>
               {sortedLetters[letter as keyof typeof sortedLetters].map(
                 (friend) => (
                   <FriendExcerpt friend={friend} />

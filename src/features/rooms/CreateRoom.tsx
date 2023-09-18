@@ -1,6 +1,5 @@
 import * as Unicons from "@iconscout/react-unicons";
 import { useState } from "react";
-import FriendsList from "../users/FriendsListAlphabetical";
 import FriendList from "../users/FriendList";
 import CreateGroup from "./CreateGroup";
 import { User } from "../../app/userHook";

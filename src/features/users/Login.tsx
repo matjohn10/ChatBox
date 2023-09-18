@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { fetchUser } from "./userSlice";
-import { useAppDispatch } from "../../app/hooks";
+import { fetchUser, getUserStatus } from "./userSlice";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -9,23 +9,29 @@ const Login = () => {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const status = useAppSelector(getUserStatus);
 
   const onChangeUsername = (e: React.ChangeEvent<HTMLInputElement>) =>
     setUsername(e.currentTarget.value);
   const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) =>
     setPassword(e.currentTarget.value);
 
-  const onSubmitLogin = (
+  const onSubmitLogin = async (
     e:
       | React.FormEvent<HTMLFormElement>
       | React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
 
-    dispatch(fetchUser({ username, password }));
-    setUsername("");
-    setPassword("");
-    navigate("/user");
+    await dispatch(fetchUser({ username, password }));
+    if (status === "error") {
+      alert("You entered the wrong credentials. Please try again.");
+      setPassword("");
+    } else {
+      setUsername("");
+      setPassword("");
+      navigate("/user");
+    }
   };
 
   return (

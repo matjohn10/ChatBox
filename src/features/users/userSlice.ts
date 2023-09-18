@@ -38,21 +38,33 @@ export const fetchAllUsers = createAsyncThunk(
   }
 );
 
+// export const fetchUser = createAsyncThunk(
+//   "user/fetchUser",
+//   async (user: { username?: string; password?: string; userId?: string }) => {
+//     try {
+//       const response = await axios.post(
+//         import.meta.env.VITE_URL + "/users/login",
+//         user
+//       );
+//       const data = response.data;
+//       return data;
+//     } catch (err) {
+//       let message = "Unknown Error";
+//       if (err instanceof Error) message = err.message;
+//       return message;
+//     }
+//   }
+// );
+
 export const fetchUser = createAsyncThunk(
   "user/fetchUser",
   async (user: { username?: string; password?: string; userId?: string }) => {
-    try {
-      const response = await axios.post(
-        import.meta.env.VITE_URL + "/users/login",
-        user
-      );
-      const data = response.data;
-      return data;
-    } catch (err) {
-      let message = "Unknown Error";
-      if (err instanceof Error) message = err.message;
-      return message;
-    }
+    const response = await axios.post(
+      import.meta.env.VITE_URL + "/users/login",
+      user
+    );
+    const data = response.data;
+    return data;
   }
 );
 
@@ -240,8 +252,11 @@ const userSlice = createSlice({
       .addCase(fetchUser.rejected, (state, action) => {
         state.status = "error";
         state.error = action.error.message;
+        console.log("in case error");
       })
       .addCase(fetchUser.fulfilled, (state, action) => {
+        // login error give string, successful give object
+        // but first, test something: remove the try catch and see if it goes into the .rejected
         state.user = action.payload.user;
         state.settings = action.payload.settings;
         state.status = "succeeded";

@@ -13,14 +13,25 @@ const FriendFinder = ({ socket }: Props) => {
   const [searchParam, setSearchParam] = useState("");
   const onChangeParam = (e: React.ChangeEvent<HTMLInputElement>) =>
     setSearchParam(e.currentTarget.value);
-  const matchingUsers =
+  let matchingUsers =
     searchParam &&
     users?.filter((user) =>
       user.username
-        .concat(user.firstname, user.lastname, user.userId)
+        .concat(user.firstname, user.lastname)
         .toLowerCase()
         .includes(searchParam.toLowerCase())
     );
+  if (matchingUsers?.length === 0) {
+    matchingUsers =
+      searchParam &&
+      users?.filter((user) =>
+        user.username
+          .concat(user.firstname, user.lastname, user.userId)
+          .toLowerCase()
+          .includes(searchParam.toLowerCase())
+      );
+  }
+
   let suggestedUsers = matchingUsers
     ? matchingUsers.map((user) => (
         <SuggestedFriendExcerpt
@@ -47,7 +58,9 @@ const FriendFinder = ({ socket }: Props) => {
           />
         </form>
       </div>
-      <div className="suggestedFriendsDiv">{suggestedUsers}</div>
+      <div className="suggestedFriendsDiv" key={Math.random()}>
+        {suggestedUsers}
+      </div>
     </article>
   );
 };
