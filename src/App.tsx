@@ -20,7 +20,7 @@ import "./css/messages.css";
 import "./css/rooms.css";
 import { useAppSelector } from "./app/hooks";
 import { getuserSettings, getUser } from "./features/users/userSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const socket: Socket = io("http://localhost:3000", {
   autoConnect: false,
@@ -44,13 +44,16 @@ function App() {
     }
   };
 
+  // state of the sidemenu when in small screen size
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   useEffect(() => {
     if (user) checkUserMode();
   }, [userSettings]);
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Layout />}>
+        <Route path="/" element={<Layout setIsMenuOpen={setIsMenuOpen} />}>
           <Route index element={<IndexPage />} />
           <Route path="/message-test" element={<MessagePage />} />
           <Route path="/test" element={<Test socket={socket} />} />
@@ -64,7 +67,10 @@ function App() {
 
           {/* Protected user routes */}
           <Route path="/user" element={<PrivateRoutes />}>
-            <Route index element={<UserPage socket={socket} />} />
+            <Route
+              index
+              element={<UserPage socket={socket} isMenuOpen={isMenuOpen} />}
+            />
           </Route>
           <Route path="/messages/:friendId" element={<PrivateRoutes />}>
             <Route index element={<PersonalMessagePage socket={socket} />} />

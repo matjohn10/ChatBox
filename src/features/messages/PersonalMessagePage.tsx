@@ -73,7 +73,11 @@ const PersonalMessagePage = ({ socket }: Props) => {
   return (
     <section className="messagePageSection">
       <article className="messagesExcerptsArticle">
-        <ConversationExcerpts setIsCreateChat={setNothing} plusChatOn={false} />
+        <ConversationExcerpts
+          setIsCreateChat={setNothing}
+          plusChatOn={false}
+          isChatRoom={true}
+        />
       </article>
       <article className="messageArticle">
         <h2>{friend ? friend?.firstname : room?.name}</h2>

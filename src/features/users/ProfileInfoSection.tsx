@@ -25,6 +25,7 @@ const ProfileInfoSection = ({
     <ConversationExcerpts
       setIsCreateChat={setIsCreateChat}
       plusChatOn={true}
+      isChatRoom={false}
     />,
     <FriendFinder socket={socket} />,
     <ShareId />,

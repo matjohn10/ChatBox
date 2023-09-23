@@ -6,6 +6,7 @@ import * as Unicons from "@iconscout/react-unicons";
 const ConversationExcerpts = (props: {
   setIsCreateChat: React.Dispatch<React.SetStateAction<boolean>>;
   plusChatOn: boolean;
+  isChatRoom: boolean;
 }) => {
   const conversations = useAppSelector(getConversations) || [];
   const renderedMessages = conversations.map((conversation) => (
@@ -16,7 +17,11 @@ const ConversationExcerpts = (props: {
     props.setIsCreateChat((prev) => !prev);
   };
   return (
-    <div className="conversationExcerptsDiv">
+    <div
+      className="conversationExcerptsDiv"
+      key={Math.random()}
+      id="chatRoomExcerptsDiv"
+    >
       <h2>
         Conversations{" "}
         {props.plusChatOn ? (
@@ -29,7 +34,11 @@ const ConversationExcerpts = (props: {
           <></>
         )}
       </h2>
-      <div className="messagesDiv" key={Math.random()}>
+      <div
+        className="messagesDiv"
+        id={props.isChatRoom ? "chatRoomExcerpt" : ""}
+        key={Math.random()}
+      >
         {renderedMessages}
       </div>
     </div>

@@ -19,6 +19,7 @@ interface InitialUserState {
 }
 
 const initialState: InitialUserState = {
+  user: JSON.parse(localStorage.getItem("user") || "{}") || null,
   status: "idle",
   error: undefined,
 }; // whatever is fetched from DB at login
@@ -37,24 +38,6 @@ export const fetchAllUsers = createAsyncThunk(
     }
   }
 );
-
-// export const fetchUser = createAsyncThunk(
-//   "user/fetchUser",
-//   async (user: { username?: string; password?: string; userId?: string }) => {
-//     try {
-//       const response = await axios.post(
-//         import.meta.env.VITE_URL + "/users/login",
-//         user
-//       );
-//       const data = response.data;
-//       return data;
-//     } catch (err) {
-//       let message = "Unknown Error";
-//       if (err instanceof Error) message = err.message;
-//       return message;
-//     }
-//   }
-// );
 
 export const fetchUser = createAsyncThunk(
   "user/fetchUser",
@@ -233,9 +216,11 @@ const userSlice = createSlice({
   reducers: {
     removeUser(state, action) {
       state.user = action.payload;
+      localStorage.removeItem("user");
     },
     updateUser(state, action) {
       state.user = action.payload;
+      localStorage.setItem("user", action.payload);
     },
   },
   extraReducers(builder) {
@@ -260,6 +245,7 @@ const userSlice = createSlice({
         state.user = action.payload.user;
         state.settings = action.payload.settings;
         state.status = "succeeded";
+        localStorage.setItem("user", JSON.stringify(action.payload.user));
       })
       .addCase(fetchAllUsers.pending, (state) => {
         state.status = "loading";

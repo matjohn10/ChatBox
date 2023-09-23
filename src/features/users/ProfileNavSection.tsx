@@ -3,13 +3,22 @@ import * as Unicons from "@iconscout/react-unicons";
 interface Props {
   selectedMenu: string;
   setSelectedMenu: React.Dispatch<React.SetStateAction<string>>;
+  isMenuOpen: boolean;
 }
-const ProfileNavSection = ({ selectedMenu, setSelectedMenu }: Props) => {
+const ProfileNavSection = ({
+  selectedMenu,
+  setSelectedMenu,
+  isMenuOpen,
+}: Props) => {
   const onMenuClick = (key: string) => {
     setSelectedMenu(key);
   };
   return (
-    <section className="profileNavSection">
+    <section
+      className={
+        isMenuOpen ? "profileNavSection sideNavOpen" : "profileNavSection"
+      }
+    >
       <ul>
         <li
           onClick={() => onMenuClick("1")}

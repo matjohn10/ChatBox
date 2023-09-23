@@ -9,9 +9,10 @@ import { Friend, User } from "../../app/userHook";
 
 interface Props {
   socket: Socket;
+  isMenuOpen: boolean;
 }
 
-const UserPage = ({ socket }: Props) => {
+const UserPage = ({ socket, isMenuOpen }: Props) => {
   const user = useAppSelector(getUser);
   const dispatch = useAppDispatch();
   const [selectedMenu, setSelectedMenu] = useState("3");
@@ -57,6 +58,7 @@ const UserPage = ({ socket }: Props) => {
       <ProfileNavSection
         selectedMenu={selectedMenu}
         setSelectedMenu={setSelectedMenu}
+        isMenuOpen={isMenuOpen}
       />
       <div className="profileMainContainer">
         <ProfileInfoSection

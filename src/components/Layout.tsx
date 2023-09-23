@@ -1,10 +1,14 @@
 import { Outlet } from "react-router-dom";
 import Header from "./Header";
 
-const Layout = () => {
+interface Props {
+  setIsMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Layout = ({ setIsMenuOpen }: Props) => {
   return (
     <>
-      <Header />
+      <Header setIsMenuOpen={setIsMenuOpen} />
       <main className="App">
         <Outlet />
       </main>
