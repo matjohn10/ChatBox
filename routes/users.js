@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const mongoose = require("mongoose");
 const { User, UserSettings } = require("../assets/usersDb");
 const mutateConvo = require("../middleware/userHooks");
 
@@ -27,7 +26,7 @@ router.post("/login", async (req, res) => {
 
 router.post("/signup", async (req, res) => {
   const user = new User(req.body);
-  const UserSettings = new UserSettings({
+  const UserSetting = new UserSettings({
     userId: req.body.userId,
     isDarkMode: false,
     bgColor: req.body.bgColor,
@@ -35,7 +34,7 @@ router.post("/signup", async (req, res) => {
 
   try {
     await user.save();
-    await UserSettings.save();
+    await UserSetting.save();
     res.send(user);
   } catch (error) {
     res.status(500).send(error);
