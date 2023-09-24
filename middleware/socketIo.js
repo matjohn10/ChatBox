@@ -1,10 +1,15 @@
 const { User } = require("../assets/usersDb");
+require("dotenv").config();
 
 module.exports = function socketMW(httpServer) {
   const { Server } = require("socket.io");
   const io = new Server(httpServer, {
     cors: {
-      origin: ["http://localhost:5173", "http://216.209.98.135:5173/"],
+      origin: [
+        "http://localhost:5173",
+        "http://216.209.98.135:5173/",
+        process.env.PROD_URL,
+      ],
     },
   });
 

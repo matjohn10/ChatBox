@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const mongoose = require("mongoose");
 const { UserSocket } = require("../assets/usersDb");
 
 router.post("/save-id", async (req, res) => {

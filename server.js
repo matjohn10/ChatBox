@@ -4,7 +4,7 @@ const PORT = 3000;
 const app = express();
 const http = require("http");
 const server = http.createServer(app);
-const socketMW = require("./middleware/socketIo")(server);
+require("./middleware/socketIo")(server);
 const cors = require("cors");
 const mongoose = require("mongoose");
 mongoose.connect(
@@ -21,7 +21,14 @@ usersDb.once("open", function () {
 });
 
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin:
+      process.env.ENVIRONMENT === "production"
+        ? process.env.PROD_URL
+        : "http://localhost:5173",
+  })
+);
 app.use("/users", require("./routes/users"));
 app.use("/socket", require("./routes/socket"));
 
