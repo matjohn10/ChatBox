@@ -82,7 +82,11 @@ const PersonalMessagePage = ({ socket }: Props) => {
       <article className="messageArticle">
         <h2>{friend ? friend?.firstname : room?.name}</h2>
         <div className="messagingDiv">
-          <MessagesArticle conversation={conversation} />
+          <MessagesArticle
+            conversation={conversation}
+            room={room}
+            socket={socket}
+          />
         </div>
         <div className="sendMessageForm">
           <form onSubmit={onSendMessage}>

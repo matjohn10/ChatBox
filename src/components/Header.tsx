@@ -3,16 +3,19 @@ import { useAppSelector, useAppDispatch } from "../app/hooks";
 import { getUser, removeUser } from "../features/users/userSlice";
 import * as Unicons from "@iconscout/react-unicons";
 import { useState } from "react";
+import { Socket } from "socket.io-client";
 
 interface Props {
   setIsMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  socket: Socket;
 }
 
-const Header = ({ setIsMenuOpen }: Props) => {
+const Header = ({ setIsMenuOpen, socket }: Props) => {
   const user = useAppSelector(getUser);
   const dispatch = useAppDispatch();
   const handleLogout = () => {
     dispatch(removeUser(null));
+    socket.disconnect();
   };
 
   // user nav bar clicked check

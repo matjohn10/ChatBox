@@ -308,12 +308,16 @@ export const getFriends = (state: RootState) =>
     a.firstname.localeCompare(b.firstname)
   );
 export const getFriendById = (state: RootState, userId: string) =>
-  state.user.user?.friends.find((friend) => friend.userId === userId);
+  state.user.user?.friends?.find((friend) => friend.userId === userId);
 export const getConversations = (state: RootState) =>
   state.user.user?.conversations;
 export const getRooms = (state: RootState) => state.user.user?.rooms;
 export const getRoomById = (state: RootState, roomId: string) =>
   state.user.user?.rooms.find((room) => room.roomId === roomId);
+
+// export const getFriendsInRoom = (state: RootState, room: Room) => {
+//   const friends = room.members.filter(member => member.)
+// }
 
 export const getConvoFromRoomOrFriendId = (state: RootState, Id: string) =>
   state.user.user?.conversations.find((convo) => convo.convoId === Id);

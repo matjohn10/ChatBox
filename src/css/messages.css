@@ -155,6 +155,36 @@
 .textMessage span {
   color: black;
 }
+.textMessage span {
+  font-size: 1.2rem;
+}
+
+.notFriendInChatSpan {
+  text-decoration: underline;
+}
+.notFriendInChatSpan:hover {
+  cursor: pointer;
+  opacity: 0.95;
+}
+.notFriendInChatSpan:active {
+  color: var(--text-light);
+}
+
+.notFriendInChatSpan:hover .notFriendPopup {
+  display: block;
+}
+
+.notFriendPopup {
+  text-decoration: none;
+  display: none;
+  position: absolute;
+  top: 3rem;
+  left: 50%;
+  padding: 1rem;
+  background-color: var(--btn-light);
+  transform: translate(-50%);
+  z-index: 100;
+}
 
 @media screen and (max-width: 700px) {
   .messagePageSection {

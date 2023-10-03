@@ -53,7 +53,10 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Layout setIsMenuOpen={setIsMenuOpen} />}>
+        <Route
+          path="/"
+          element={<Layout setIsMenuOpen={setIsMenuOpen} socket={socket} />}
+        >
           <Route index element={<IndexPage />} />
           <Route path="/message-test" element={<MessagePage />} />
           <Route path="/test" element={<Test socket={socket} />} />
