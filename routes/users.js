@@ -42,13 +42,12 @@ router.post("/signup", async (req, res) => {
 });
 
 router.post("/add-friend", async (req, res) => {
-  const user = await User.findOne(req.body.user);
+  const user = await User.findOne({ userId: req.body.user.userId });
   const userAsFriend = await User.findOne(
-    req.body.user,
+    { userId: req.body.user.userId },
     "userId firstname lastname username bgColor"
   );
   const friend = await User.findOne(req.body.friend);
-
   try {
     if (!friend.friends.includes(userAsFriend))
       friend.friends.push(userAsFriend);
@@ -56,6 +55,7 @@ router.post("/add-friend", async (req, res) => {
     user.friends = req.body.friends;
     await friend.save();
     await user.save();
+
     res.send(user);
   } catch (error) {
     res.status(500).send(error);

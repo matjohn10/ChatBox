@@ -67,5 +67,8 @@ module.exports = function socketMW(httpServer) {
         socket.to(member.userId).emit("message_from_friend", { user: toUser });
       });
     });
+
+    // Disconnected
+    socket.on("disconnect", (reason) => console.log(reason));
   });
 };
