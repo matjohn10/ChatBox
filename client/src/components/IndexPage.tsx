@@ -1,6 +1,4 @@
 import { Link } from "react-router-dom";
-import { useAppSelector } from "../app/hooks";
-import { getUser } from "../features/users/userSlice";
 
 const IndexPage = () => {
   const user = localStorage.getItem("user"); //useAppSelector(getUser);
