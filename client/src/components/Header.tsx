@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { useAppSelector, useAppDispatch } from "../app/hooks";
-import { getUser, removeUser } from "../features/users/userSlice";
+import { useAppDispatch } from "../app/hooks";
+import { removeUser } from "../features/users/userSlice";
 import * as Unicons from "@iconscout/react-unicons";
 import { useState } from "react";
 import { Socket } from "socket.io-client";
@@ -46,19 +46,6 @@ const Header = ({ setIsMenuOpen, socket }: Props) => {
               </Link>
             )}
           </li>
-          {/* TESTING MENU */}
-          {/* <li>
-            <div className="dropDownDiv">
-              <button className="dropDownBtn">
-                Testing
-                <i className="fa fa-caret-down"></i>
-              </button>
-              <div className="dropDownContent">
-                <Link to="/test">Socket</Link>
-                <Link to="/message-test">Message Test</Link>
-              </div>
-            </div>
-          </li> */}
         </ul>
         <ul className="smallScreenNavBarUl">
           <li>
