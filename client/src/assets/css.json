@@ -1,0 +1,12 @@
+{
+  "light": {
+    "--text-light": "#fdfdfc",
+    "--text-dark": "#0d1011",
+    "--background": "#fdfdfc",
+    "--background-dark": "#042d64",
+    "--btn-light": "#d0d8dc",
+    "--btn-dark": "#303a40",
+    "--accent": "#658393"
+  },
+  "dark": {}
+}

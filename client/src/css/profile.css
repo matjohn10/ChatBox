@@ -1,0 +1,415 @@
+.profileMainContainer {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+}
+
+.profileNavSection {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 88px;
+  left: 0;
+  width: 20%;
+  height: 100%;
+  padding: 2rem 1rem;
+  background-color: var(--background-dark);
+  box-shadow: 6px 7px 10px -3px rgba(0, 0, 0, 0.75);
+}
+.profileNavSection ul {
+  display: flex;
+  margin-top: 1rem;
+  flex-direction: column;
+  list-style-type: none;
+  gap: 1rem;
+}
+.profileNavSection ul li {
+  background-color: var(--accent);
+  color: #f5f5f5;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
+.profileNavSection ul li:hover {
+  cursor: pointer;
+  opacity: 0.99;
+  color: var(--btn-light);
+}
+.sideNavOpen {
+  display: flex !important;
+}
+
+@media screen and (max-width: 1000px) {
+  .profileNavSection {
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    top: 88px;
+    left: 0;
+    min-width: 200px;
+    height: fit-content;
+    padding: 1rem 1rem;
+    background-color: var(--background-dark);
+    border-radius: 0px 0px 8px 0px;
+    box-shadow: 6px 7px 10px -3px rgba(0, 0, 0, 0.75);
+  }
+  .profileNavSection ul {
+    display: flex;
+    margin-top: 1rem;
+    flex-direction: column;
+    list-style-type: none;
+    gap: 1rem;
+  }
+  .profileNavSection ul li {
+    background-color: var(--accent);
+    color: #f5f5f5;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    font-size: 1.12rem;
+  }
+  .profileNavSection ul li:hover {
+    cursor: pointer;
+    opacity: 0.99;
+    color: var(--btn-light);
+  }
+
+  .profileInfoSection {
+    margin-left: 0 !important;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .friendsExcerptDiv {
+    width: fit-content;
+  }
+}
+
+.profileInfoSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: calc(20%);
+  padding: 2rem 1rem;
+  width: 100%;
+  background-color: var(--background);
+}
+
+.profileInfoArticle {
+  display: flex;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid lightgray;
+  border-radius: 1rem;
+}
+
+@keyframes slideLeft {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.profileBadge {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 8rem;
+  height: 14rem;
+  width: 14rem;
+  border-radius: 50%;
+  /* background-color: lightgray; */
+  box-shadow: 0px 0px 7px 1px rgb(128, 136, 144);
+}
+
+.profileInfo {
+  display: none;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: 1.5rem;
+  gap: 1rem;
+  width: fit-content;
+}
+
+.profileInfoArticle:hover > .profileInfo {
+  animation: slideLeft 0.5s linear forwards;
+  display: flex;
+}
+
+.profileInfo > p {
+  text-align: left;
+}
+
+.accountLogicsArticle {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 1rem;
+  width: 100%;
+}
+
+.selected {
+  background-color: var(--btn-light) !important;
+}
+
+.selected:hover {
+  color: whitesmoke !important;
+  cursor: default !important;
+}
+
+.friendFinderArticle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.searchFriendDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 60%;
+  margin-top: 1rem;
+}
+.searchFriendDiv h2 {
+  color: var(--text-dark);
+}
+
+.searchFriendDiv form {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.searchFriendDiv label {
+  color: var(--background-dark);
+  margin: 0;
+}
+.searchFriendDiv input {
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  border: none;
+  background-color: var(--btn-light);
+  color: var(--text-light);
+  font-size: large;
+  font-family: "Times New Roman", Times, serif;
+}
+.searchFriendDiv input::placeholder {
+  color: var(--text-light);
+  font-size: large;
+  font-family: "Times New Roman", Times, serif;
+}
+
+/* Friend Excerpt */
+.suggestedFriendsDiv {
+  width: 50%;
+  min-width: 366px;
+  background-color: var(--background);
+  border-radius: 0px 0px 7px 7px;
+  /* box-shadow: 0px 0px 7px 1px rgb(128, 136, 144); */
+  /* border: 1px solid transparent;
+  box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.2); */
+  margin-top: 1rem;
+  max-height: 21rem;
+  overflow-y: scroll;
+}
+.suggestedFriendsDiv::-webkit-scrollbar {
+  display: none;
+  width: none;
+}
+.suggestedFriendDiv {
+  display: flex;
+  gap: 1.5rem;
+  margin: 0.75rem 0.375rem;
+  padding: 0.375rem 3rem;
+  align-items: center;
+  background-color: var(--background);
+  height: fit-content;
+  min-width: 337.5px;
+  justify-content: space-between;
+  /* box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.65); */
+  box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.65);
+  border-radius: 10px;
+}
+
+input {
+  background-color: var(--background);
+  color: var(--text-dark);
+}
+
+/* .suggestedFriendDiv:hover {
+  background-color: rgb(128, 136, 144);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.suggestedFriendDiv:hover div p {
+  color: var(--text-light) !important;
+} */
+
+.suggestedFriendBadge {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  border: 2px solid rgb(128, 136, 144);
+}
+
+.usernameText {
+  margin-left: 0.375rem;
+  font-size: 1rem;
+  color: var(--text-dark);
+}
+.addFriendBtn:hover {
+  cursor: pointer;
+  opacity: 0.75;
+}
+
+/* Friends List CSS */
+
+.renderedFriendsList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.renderedFriendsList h2 {
+  margin-bottom: 1.75rem;
+}
+
+.letterDiv {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+.letterDiv h3 {
+  margin-left: 0.5rem;
+  padding: 0.5rem;
+}
+
+.straightLine {
+  box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.65);
+  margin-bottom: 0.375rem;
+}
+
+.friendsExcerptsDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0 3rem;
+  gap: 10px;
+}
+.userNames {
+  display: flex;
+  flex-direction: column;
+}
+
+.friendExcerptDiv {
+  display: flex;
+  width: 90%;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 6rem;
+}
+
+.hoverP:hover {
+  cursor: pointer;
+}
+
+/* Userid page css */
+
+.shareIdDiv {
+  padding: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.75rem;
+  font-family: "Times New Roman", Times, serif;
+  font-weight: bold;
+}
+
+/* Profile Settings CSS */
+.profileSettingArticle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+.profileSettingArticle form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.formInputDiv {
+  display: flex;
+  gap: 1.5rem;
+}
+
+label {
+  color: var(--text-dark);
+}
+
+.formInputDiv input {
+  text-align: center;
+  padding: 0.375rem 0.5rem;
+  border-radius: 0.5rem;
+  border: none;
+  box-shadow: 0 0 1px 1px var(--btn-light);
+  font-size: 1.1rem;
+}
+
+#changeEmail {
+  width: 18rem;
+}
+
+.toggleDarkDiv {
+  display: flex;
+  justify-content: center;
+  width: fit-content;
+  gap: 2rem;
+}
+
+.profileSettingArticle form button {
+  padding: 0.5rem;
+  margin-top: 1rem;
+  border-radius: 0.375rem;
+  background-color: var(--accent);
+  color: var(--text-light);
+  font-family: "Times New Roman", Times, serif;
+  font-size: large;
+  border: none;
+  box-shadow: 0 0 1px 1px var(--btn-light);
+}
+
+.profileSettingArticle form button:disabled {
+  background-color: var(--btn-light);
+}
+
+input[type="color"] {
+  border: none;
+}
+::-webkit-color-swatch {
+  border: none;
+  border-radius: 50%;
+}
+
+.revertColor {
+  display: flex;
+  padding: 0.5rem;
+  background-color: var(--btn-light);
+  border-radius: 0.5rem;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  font-family: "Times New Roman", Times, serif;
+  color: var(--text-dark);
+}
+
+.revertColor:hover {
+  cursor: pointer;
+  opacity: 0.9;
+}
