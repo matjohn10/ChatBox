@@ -11,7 +11,7 @@ interface Props {
 }
 
 const Header = ({ setIsMenuOpen, socket }: Props) => {
-  const user = useAppSelector(getUser);
+  const user = localStorage.getItem("user"); //useAppSelector(getUser);
   const dispatch = useAppDispatch();
   const handleLogout = () => {
     dispatch(removeUser(null));

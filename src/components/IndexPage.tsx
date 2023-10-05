@@ -3,7 +3,7 @@ import { useAppSelector } from "../app/hooks";
 import { getUser } from "../features/users/userSlice";
 
 const IndexPage = () => {
-  const user = useAppSelector(getUser);
+  const user = localStorage.getItem("user"); //useAppSelector(getUser);
   return (
     <section className="indexSection">
       <article className="welcomeArticle">
