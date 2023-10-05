@@ -55,7 +55,6 @@ module.exports = function socketMW(httpServer) {
       const toUser = await User.findOne({
         userId: data.to,
       });
-      console.log(toUser.conversations[1]);
       socket.to(data.to).emit("message_from_friend", { user: toUser });
     });
     socket.on("message_to_group", async (data) => {

@@ -190,7 +190,6 @@ router.post("/add-room", async (req, res) => {
       user.markModified("rooms");
       await user.save();
     } catch (error) {
-      console.log(member);
       res.status(500).send(error);
     }
   });
@@ -208,7 +207,6 @@ router.post("/add-room", async (req, res) => {
     await creator.save();
     res.send(creator);
   } catch (error) {
-    console.log(creator);
     res.status(500).send(error);
   }
 });
