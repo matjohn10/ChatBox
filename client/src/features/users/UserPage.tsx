@@ -6,6 +6,7 @@ import CreateRoom from "../rooms/CreateRoom";
 import { useState, useEffect } from "react";
 import { Socket } from "socket.io-client";
 import { Friend, User } from "../../app/userHook";
+import { Toaster, toast } from "sonner";
 
 interface Props {
   socket: Socket;
@@ -29,9 +30,13 @@ const UserPage = ({ socket, isMenuOpen }: Props) => {
 
     //listening for new friend
     socket.on("friend_added", ({ user }: { user: Friend }) => {
-      alert(
-        `You have a new friend. ${user.firstname} ${user.lastname} (${user.username}) added you as a friend.`
-      );
+      // alert(
+      //   `You have a new friend. ${user.firstname} ${user.lastname} (${user.username}) added you as a friend.`
+      // );
+      console.log("Friend added");
+      toast.message("Your have a new friend!", {
+        description: `${user.firstname} ${user.lastname} (${user.username}) added you as a friend.`,
+      });
       dispatch(fetchUser({ username: user.username, userId: user.userId })); // change that password for email, if password not given
     });
 
@@ -39,9 +44,13 @@ const UserPage = ({ socket, isMenuOpen }: Props) => {
     socket.on(
       "added-to-chat",
       (data: { friend: { username: string }; room: { name: string } }) => {
-        alert(
-          `You were added to the ${data.room.name} chatting group by\nyour friend ${data.friend.username}`
-        );
+        // alert(
+        //   `You were added to the ${data.room.name} chatting group by\nyour friend ${data.friend.username}`
+        // );
+        console.log("Chat added");
+        toast.message("Your were added to a group chat!", {
+          description: `Group: ${data.room.name} - Added by ${data.friend.username}`,
+        });
         //update the info here and double check
         dispatch(fetchUser({ username: user?.username, userId: user?.userId })); // change that password for email, if password not given
       }
@@ -67,6 +76,7 @@ const UserPage = ({ socket, isMenuOpen }: Props) => {
           setIsCreateChat={setIsCreateChat}
           socket={socket}
         />
+        <Toaster />
       </div>
       {isCreateChat ? (
         <CreateRoom
